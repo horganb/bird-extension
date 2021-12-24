@@ -1,0 +1,26 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "node": true,
+    "webextensions": true
+  },
+  "parser": "C:/Users/benho/AppData/Roaming/npm/node_modules/@babel/eslint-parser",
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "impliedStrict": true
+    },
+    "requireConfigFile": false
+  },
+  "extends": [
+    "eslint:recommended"
+  ],
+  "rules": {
+    "object-curly-spacing": ["warn", "always"],
+    "arrow-parens": ["warn", "as-needed"],
+    "semi": ["warn", "always"],
+    "no-unused-vars": ["warn"]
+  }
+}
