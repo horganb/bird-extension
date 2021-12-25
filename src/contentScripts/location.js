@@ -24,6 +24,19 @@ export class Dot {
   isVisible() {
     throw new AbstractMethodError();
   }
+
+  /** Convert to a point. */
+  toPoint() {
+    return new Point(this.x, this.y);
+  }
+
+  /** Determines whether two Dots represent the same position. */
+  equals(other, tolerance = 0) {
+    return (
+      Math.abs(this.x - other.x) <= tolerance &&
+      Math.abs(this.y - other.y) <= tolerance
+    );
+  }
 }
 
 /** A static point in the document. */
@@ -48,8 +61,12 @@ export class Point extends Dot {
   isVisible() {
     const viewportX = this.x - document.documentElement.scrollLeft;
     const viewportY = this.y - document.documentElement.scrollTop;
-    return (viewportX >= 0 && viewportX <= window.innerWidth
-      && viewportY >= 0 && viewportY <= window.innerHeight);
+    return (
+      viewportX >= 0 &&
+      viewportX <= window.innerWidth &&
+      viewportY >= 0 &&
+      viewportY <= window.innerHeight
+    );
   }
 }
 
@@ -97,7 +114,12 @@ export class Platform {
       const parent = this.node.parentElement;
       const parentVisible = parent && isElementVisible(parent);
       const rect = this.clientRect;
-      return parentVisible && isRectInViewport(rect) && rect.width > 0 && rect.height > 0;
+      return (
+        parentVisible &&
+        isRectInViewport(rect) &&
+        rect.width > 0 &&
+        rect.height > 0
+      );
     } catch {
       return false;
     }
@@ -129,7 +151,7 @@ export class Platform {
 export class PlatformLocation extends Dot {
   /**
    * Creates a location relative to a platform.
-   * 
+   *
    * @param {Platform} platform the platform
    * @param {Number} offset x offset from left end of platform
    */
@@ -155,8 +177,8 @@ export class PlatformLocation extends Dot {
 
   /**
    * Returns a PlatformLocation at a random position on the given platform.
-   * 
-   * @param {Platform} platform 
+   *
+   * @param {Platform} platform
    */
   static generateRandom(platform) {
     const offset = Math.random() * platform.width;
