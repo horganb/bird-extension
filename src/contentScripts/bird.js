@@ -109,9 +109,9 @@ export default class Bird {
   getEdgePoint() {
     const x = Math.floor(Math.random() * 2)
       ? 0
-      : window.innerWidth - this.getWidth() - 5;
+      : document.documentElement.clientWidth - this.getWidth();
     const y =
-      Math.floor(Math.random() * window.innerHeight) +
+      Math.floor(Math.random() * document.documentElement.clientHeight) +
       document.documentElement.scrollTop;
     return new Point(x, y);
   }
