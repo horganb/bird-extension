@@ -1,11 +1,12 @@
 import { localURL } from './utils';
 import dom from './dom';
-import { LOOP_SPEED } from './contentScript';
+import { LOOP_SPEED, queueRemoval } from './contentScript';
 import BirdType from './birdType'; // eslint-disable-line no-unused-vars
 import { Platform, PlatformLocation, Point } from './location';
 
 const ActionTypes = {
   FLYING: 'flying',
+  FLYING_OFFSCREEN: 'flying_offscreen',
   IDLE: 'idle',
 };
 
@@ -25,6 +26,11 @@ const ActionTimers = {
       minimum: 3000,
       frequency: 0.01,
       action: bird => bird.flyToRandomPlatform(),
+    },
+    {
+      minimum: 3000,
+      frequency: 0.005,
+      action: bird => bird.flyOffscreen(),
     },
   ],
 };
@@ -55,6 +61,7 @@ export default class Bird {
     this.element = birdElement;
     this.imagePath = type.imagePath;
     this.action = null;
+    this.subAction = null;
     this.destination = null;
     this.direction = null;
     this.actionTimers = [];
@@ -72,13 +79,20 @@ export default class Bird {
 
   update() {
     if (this.action === ActionTypes.FLYING) {
-      if (!this.destination.isVisible()) {
+      if (
+        !this.destination.isVisible() &&
+        this.subAction !== ActionTypes.FLYING_OFFSCREEN
+      ) {
         this.flyToRandomPlatform();
       }
       this.moveTowardDestination();
       if (this.location.equals(this.destination)) {
-        this.setAction(ActionTypes.IDLE);
-        this.location = this.destination;
+        if (this.subAction === ActionTypes.FLYING_OFFSCREEN) {
+          this.remove();
+        } else {
+          this.setAction(ActionTypes.IDLE);
+          this.location = this.destination;
+        }
       }
     } else if (this.action === ActionTypes.IDLE) {
       this.incrementTimers();
@@ -100,6 +114,11 @@ export default class Bird {
 
   // Private methods
 
+  remove() {
+    this.element.remove();
+    queueRemoval(this);
+  }
+
   /**
    *
    * @param {Dot} location
@@ -117,6 +136,15 @@ export default class Bird {
     if (!targetPlatform) return;
     const destination = PlatformLocation.generateRandom(targetPlatform);
     this.flyToLocation(destination);
+  }
+
+  flyOffscreen() {
+    const x = Math.floor(Math.random() * 2) ? 0 : window.innerWidth;
+    const y =
+      Math.floor(Math.random() * window.innerHeight) +
+      document.documentElement.scrollTop;
+    this.flyToLocation(new Point(x, y));
+    this.subAction = ActionTypes.FLYING_OFFSCREEN;
   }
 
   switchDirection() {
@@ -143,6 +171,7 @@ export default class Bird {
 
   setAction(action) {
     this.action = action;
+    this.subAction = null;
     let filename;
     if (action === ActionTypes.FLYING) {
       filename = 'flying.gif';
