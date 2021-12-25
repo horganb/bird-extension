@@ -1,3 +1,7 @@
-To build:
+To build for development:
 
-webpack --config webpack-ext.config.js
+webpack
+
+To build for production:
+
+webpack --node-env production

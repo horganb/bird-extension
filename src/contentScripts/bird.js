@@ -4,6 +4,8 @@ import { LOOP_SPEED, queueRemoval } from './contentScript';
 import BirdType from './birdType'; // eslint-disable-line no-unused-vars
 import { Platform, PlatformLocation, Point } from './location';
 
+const BIRD_SIZE = 16;
+
 const ActionTypes = {
   FLYING: 'flying',
   FLYING_OFFSCREEN: 'flying_offscreen',
@@ -46,19 +48,12 @@ export default class Bird {
     const birdElement = document.createElement('IMG');
     birdElement.className = 'bird-ext-bird';
     dom.appendChild(birdElement);
-    const computedStyle = window.getComputedStyle(birdElement);
 
-    const initialX = Math.floor(Math.random() * 2) ? 0 : window.innerWidth;
-    const initialY =
-      Math.floor(Math.random() * window.innerHeight) +
-      document.documentElement.scrollTop;
-    this.location = new Point(initialX, initialY);
+    this.element = birdElement;
+    this.location = this.getEdgePoint();
     this.lastLocation = this.location.toPoint();
-    this.width = computedStyle.width;
-    this.height = computedStyle.height;
     this.xSpeed = type.speed * LOOP_SPEED;
     this.ySpeed = type.speed * LOOP_SPEED * 0.8;
-    this.element = birdElement;
     this.imagePath = type.imagePath;
     this.action = null;
     this.subAction = null;
@@ -67,10 +62,6 @@ export default class Bird {
     this.actionTimers = [];
 
     this.flyToRandomPlatform();
-
-    document.addEventListener('click', e => {
-      this.flyTo(e.pageX, e.pageY);
-    });
   }
 
   // Public methods
@@ -114,6 +105,27 @@ export default class Bird {
 
   // Private methods
 
+  /** Returns a random Point on the edge of the screen. */
+  getEdgePoint() {
+    const x = Math.floor(Math.random() * 2)
+      ? 0
+      : window.innerWidth - this.getWidth() - 5;
+    const y =
+      Math.floor(Math.random() * window.innerHeight) +
+      document.documentElement.scrollTop;
+    return new Point(x, y);
+  }
+
+  getWidth() {
+    return BIRD_SIZE;
+    // return parseInt(window.getComputedStyle(this.element).width);
+  }
+
+  getHeight() {
+    return BIRD_SIZE;
+    // return parseInt(window.getComputedStyle(this.element).height);
+  }
+
   remove() {
     this.element.remove();
     queueRemoval(this);
@@ -139,11 +151,7 @@ export default class Bird {
   }
 
   flyOffscreen() {
-    const x = Math.floor(Math.random() * 2) ? 0 : window.innerWidth;
-    const y =
-      Math.floor(Math.random() * window.innerHeight) +
-      document.documentElement.scrollTop;
-    this.flyToLocation(new Point(x, y));
+    this.flyToLocation(this.getEdgePoint());
     this.subAction = ActionTypes.FLYING_OFFSCREEN;
   }
 
