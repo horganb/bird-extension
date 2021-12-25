@@ -68,13 +68,10 @@ export default class Bird {
       }
     } else if (this.action === ActionTypes.IDLE) {
       this.incrementTimers();
-      // console.log(this.location.x, this.location.y);
       if (
         !this.location.isVisible() ||
         !this.location.equals(this.lastLocation, 0.01)
       ) {
-        console.log('DETECTED');
-        console.log(this.lastLocation, this.location.x, this.location.y);
         this.flyToRandomPlatform();
       } else {
         this.lastLocation = this.location.toPoint();
