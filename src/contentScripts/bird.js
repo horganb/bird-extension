@@ -14,6 +14,21 @@ const Directions = {
   RIGHT: 'right',
 };
 
+const ActionTimers = {
+  [ActionTypes.IDLE]: [
+    {
+      minimum: 500,
+      frequency: 0.02,
+      action: bird => bird.switchDirection(),
+    },
+    {
+      minimum: 3000,
+      frequency: 0.01,
+      action: bird => bird.flyToRandomPlatform(),
+    },
+  ],
+};
+
 /** A single bird. */
 export default class Bird {
   /**
@@ -42,8 +57,7 @@ export default class Bird {
     this.action = null;
     this.destination = null;
     this.direction = null;
-    this.idleTimer = 0;
-    this.flyTimer = 0;
+    this.actionTimers = [];
 
     this.flyToRandomPlatform();
 
@@ -75,14 +89,6 @@ export default class Bird {
         this.flyToRandomPlatform();
       } else {
         this.lastLocation = this.location.toPoint();
-        if (this.idleTimer > 500 && Math.random() < 0.02) {
-          this.idleTimer = 0;
-          this.switchDirection();
-        }
-        if (this.flyTimer > 3000 && Math.random() < 0.01) {
-          this.flyTimer = 0;
-          this.flyToRandomPlatform();
-        }
       }
     }
     this.updateStyles();
@@ -122,8 +128,17 @@ export default class Bird {
   }
 
   incrementTimers() {
-    this.idleTimer += LOOP_SPEED;
-    this.flyTimer += LOOP_SPEED;
+    for (let i = 0; i < this.actionTimers.length; i++) {
+      this.actionTimers[i] += LOOP_SPEED;
+      const timerData = ActionTimers[this.action][i];
+      if (
+        this.actionTimers[i] > timerData.minimum &&
+        Math.random() < timerData.frequency
+      ) {
+        this.actionTimers[i] = 0;
+        timerData.action(this);
+      }
+    }
   }
 
   setAction(action) {
@@ -138,6 +153,8 @@ export default class Bird {
     this.element.src = localURL(
       `src/images/birds/${this.imagePath}/${filename}`
     );
+    const timersForAction = ActionTimers[action] || [];
+    this.actionTimers = new Array(timersForAction.length).fill(0);
   }
 
   faceDestination() {
