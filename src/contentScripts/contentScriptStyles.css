@@ -2,4 +2,5 @@
   all: initial;
   position: absolute;
   z-index: 2147483647;
+  pointer-events: none; /* this is to exclude the bird from the call to document.elementFromPoint */
 }
