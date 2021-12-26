@@ -4,6 +4,19 @@ module.exports = {
   entry: {
     contentScript: './src/contentScripts/contentScript.js',
     background: './src/background/background.js',
+    popup: './src/popup/popup.js',
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: ['babel-loader'],
+      },
+    ],
+  },
+  resolve: {
+    extensions: ['*', '.js', '.jsx'],
   },
   output: {
     filename: pathData => {
