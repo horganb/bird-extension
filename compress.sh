@@ -1,2 +1,2 @@
 npm run build
-tar -cvf bird-extension.zip manifest.json build popup.html
+tar -cvf bird-extension.zip manifest.json build images popup.html

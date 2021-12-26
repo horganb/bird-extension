@@ -16,17 +16,17 @@
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
-      "16": "src/images/icon/icon.png",
-      "32": "src/images/icon/icon.png",
-      "48": "src/images/icon/icon.png",
-      "128": "src/images/icon/icon.png"
+      "16": "images/icon/icon.png",
+      "32": "images/icon/icon.png",
+      "48": "images/icon/icon.png",
+      "128": "images/icon/icon.png"
     }
   },
   "icons": {
-    "16": "src/images/icon/icon.png",
-    "32": "src/images/icon/icon.png",
-    "48": "src/images/icon/icon.png",
-    "128": "src/images/icon/icon.png"
+    "16": "images/icon/icon.png",
+    "32": "images/icon/icon.png",
+    "48": "images/icon/icon.png",
+    "128": "images/icon/icon.png"
   },
   "web_accessible_resources": [
     {

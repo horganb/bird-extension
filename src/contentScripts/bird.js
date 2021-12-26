@@ -205,9 +205,7 @@ export default class Bird {
     } else if (action === ActionTypes.EATING) {
       filename = 'eating.gif';
     }
-    this.element.src = localURL(
-      `src/images/birds/${this.imagePath}/${filename}`
-    );
+    this.element.src = localURL(`images/birds/${this.imagePath}/${filename}`);
     this.actionTimers = new Array(getTimersForAction(action).length).fill(0);
   }
 
