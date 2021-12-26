@@ -1,5 +1,6 @@
 import { randomBirdType } from './birdType';
 import Bird, { ACTION_FACTOR } from './bird';
+import './contentScriptStyles.css';
 
 export const LOOP_SPEED = 10;
 export const MAX_BIRDS = 3;
