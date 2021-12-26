@@ -6,7 +6,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "options_page": "src/options/options.html",
+  "options_page": "options.html",
   "permissions": ["storage"],
   "content_scripts": [
     {
