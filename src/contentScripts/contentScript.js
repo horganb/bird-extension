@@ -68,7 +68,7 @@ chrome.runtime.onMessage.addListener(request => {
   }
 });
 
-chrome.storage.local.get({ enabled: true }, ({ enabled }) => {
+chrome.storage.local.get(['enabled'], ({ enabled }) => {
   if (enabled) {
     startBirds();
   }
