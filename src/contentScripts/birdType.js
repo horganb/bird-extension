@@ -37,7 +37,6 @@ export const randomBirdType = () => {
   for (const type of birdTypes) {
     raritySum += 1 / type.rarity;
     if (pick < raritySum) {
-      console.log('sum', rarityTotal, 'pick', pick, 'returning', type);
       return type;
     }
   }
