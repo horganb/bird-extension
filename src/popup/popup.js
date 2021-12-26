@@ -34,7 +34,7 @@ const EnableSwitch = ({ defaultEnabled }) => {
   );
 };
 
-chrome.storage.local.get(['enabled'], ({ enabled }) => {
+chrome.storage.local.get({ enabled: true }, ({ enabled }) => {
   ReactDOM.render(
     <EnableSwitch defaultEnabled={enabled} />,
     document.getElementById('app-root')
