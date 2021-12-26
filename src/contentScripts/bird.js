@@ -10,6 +10,7 @@ const ActionTypes = {
   FLYING: 'flying',
   FLYING_OFFSCREEN: 'flying_offscreen',
   IDLE: 'idle',
+  EATING: 'eating',
 };
 
 const Directions = {
@@ -20,7 +21,7 @@ const Directions = {
 const ActionTimers = {
   [ActionTypes.IDLE]: [
     {
-      minimum: 500,
+      minimum: 1000,
       frequency: 0.02,
       action: bird => bird.switchDirection(),
     },
@@ -33,6 +34,18 @@ const ActionTimers = {
       minimum: 3000,
       frequency: 0.005,
       action: bird => bird.flyOffscreen(),
+    },
+    {
+      minimum: 500,
+      frequency: 0.002,
+      action: bird => bird.setAction(ActionTypes.EATING),
+    },
+  ],
+  [ActionTypes.EATING]: [
+    {
+      minimum: 830,
+      frequency: 1,
+      action: bird => bird.setAction(ActionTypes.IDLE),
     },
   ],
 };
@@ -69,6 +82,7 @@ export default class Bird {
   getTimerEvents() {}
 
   update() {
+    this.incrementTimers();
     if (this.action === ActionTypes.FLYING) {
       if (
         !this.destination.isVisible() &&
@@ -86,7 +100,6 @@ export default class Bird {
         }
       }
     } else if (this.action === ActionTypes.IDLE) {
-      this.incrementTimers();
       if (
         !this.location.isVisible() ||
         !this.location.equals(this.lastLocation, 0.01)
@@ -186,6 +199,8 @@ export default class Bird {
     } else if (action === ActionTypes.IDLE) {
       filename = 'standing.png';
       this.lastLocation = this.location.toPoint();
+    } else if (action === ActionTypes.EATING) {
+      filename = 'eating.gif';
     }
     this.element.src = localURL(
       `src/images/birds/${this.imagePath}/${filename}`
@@ -235,7 +250,7 @@ export default class Bird {
       transform:
         this.direction === Directions.RIGHT ? 'scaleX(-1)' : 'scaleX(1)',
     });
-    if (this.action !== ActionTypes.IDLE) {
+    if (this.action === ActionTypes.FLYING) {
       const realLeft = this.location.x - this.element.clientWidth / 2;
       const realTop = this.location.y - this.element.clientHeight;
       Object.assign(elementStyle, {
