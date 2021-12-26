@@ -19,11 +19,7 @@ module.exports = {
     extensions: ['*', '.js', '.jsx'],
   },
   output: {
-    filename: pathData => {
-      return pathData.chunk.name === 'background'
-        ? '[name].js'
-        : 'build/[name].js';
-    },
+    filename: 'build/[name].js',
     path: __dirname,
   },
 };
