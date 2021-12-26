@@ -25,6 +25,13 @@ const spawn = type => {
 };
 
 const mainLoop = () => {
+  const fullscreen = window.innerHeight === screen.height;
+  if (fullscreen) {
+    // pause in fullscreen
+    removeBirds();
+    return;
+  }
+
   if (activeBirds.length < MAX_BIRDS && Math.random() < 0.005) {
     spawn(BLUE_JAY);
   }
@@ -35,4 +42,34 @@ const mainLoop = () => {
   toRemove = [];
 };
 
-setInterval(mainLoop, LOOP_SPEED);
+let gameInterval;
+
+const startBirds = () => {
+  gameInterval = setInterval(mainLoop, LOOP_SPEED);
+};
+
+const removeBirds = () => {
+  activeBirds.forEach(bird => {
+    bird.remove();
+  });
+  activeBirds = [];
+};
+
+const stopBirds = () => {
+  removeBirds();
+  clearInterval(gameInterval);
+};
+
+chrome.runtime.onMessage.addListener(request => {
+  if (request.enabled) {
+    startBirds();
+  } else if (request.enabled === false) {
+    stopBirds();
+  }
+});
+
+chrome.storage.local.get(['enabled'], ({ enabled }) => {
+  if (enabled) {
+    startBirds();
+  }
+});

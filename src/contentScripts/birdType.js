@@ -23,4 +23,3 @@ export const FALCON = new BirdType();
 FALCON.imagePath = 'falcon';
 FALCON.speed = 0.7;
 FALCON.rarity = 2;
-

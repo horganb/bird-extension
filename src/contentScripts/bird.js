@@ -116,6 +116,11 @@ export default class Bird {
     this.flyToLocation(new Point(x, y));
   }
 
+  remove() {
+    this.element.remove();
+    queueRemoval(this);
+  }
+
   // Private methods
 
   /** Returns a random Point on the edge of the screen. */
@@ -137,11 +142,6 @@ export default class Bird {
   getHeight() {
     return BIRD_SIZE;
     // return parseInt(window.getComputedStyle(this.element).height);
-  }
-
-  remove() {
-    this.element.remove();
-    queueRemoval(this);
   }
 
   /**
