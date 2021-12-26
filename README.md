@@ -1,7 +1,7 @@
 To build for development:
 
-webpack
+npm run dev
 
 To build for production:
 
-webpack --node-env production
+npm run build
