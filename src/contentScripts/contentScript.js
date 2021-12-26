@@ -1,7 +1,5 @@
-import { BLUE_JAY, CARDINAL } from './birdType';
-import Bird from './bird';
-
-const birds = [BLUE_JAY, CARDINAL];
+import { randomBirdType } from './birdType';
+import Bird, { ACTION_FACTOR } from './bird';
 
 export const LOOP_SPEED = 10;
 export const MAX_BIRDS = 3;
@@ -34,9 +32,8 @@ const mainLoop = () => {
     return;
   }
 
-  if (activeBirds.length < MAX_BIRDS && Math.random() < 0.005) {
-    const bird = birds[Math.floor(Math.random() * birds.length)];
-    spawn(bird);
+  if (activeBirds.length < MAX_BIRDS && Math.random() < 0.5 * ACTION_FACTOR) {
+    spawn(randomBirdType());
   }
   activeBirds.forEach(bird => {
     bird.update();

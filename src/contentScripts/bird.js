@@ -5,6 +5,7 @@ import BirdType from './birdType'; // eslint-disable-line no-unused-vars
 import { Platform, PlatformLocation, Point } from './location';
 
 const BIRD_SIZE = 16;
+export const ACTION_FACTOR = 0.002;
 
 const ActionTypes = {
   FLYING: 'flying',
@@ -22,33 +23,35 @@ const ActionTimers = {
   [ActionTypes.IDLE]: [
     {
       minimum: 1000,
-      frequency: 0.02,
+      frequency: 2 * ACTION_FACTOR,
       action: bird => bird.switchDirection(),
     },
     {
       minimum: 3000,
-      frequency: 0.01,
+      frequency: ACTION_FACTOR,
       action: bird => bird.flyToRandomPlatform(),
     },
     {
       minimum: 3000,
-      frequency: 0.005,
+      frequency: 0.5 * ACTION_FACTOR,
       action: bird => bird.flyOffscreen(),
     },
     {
       minimum: 500,
-      frequency: 0.002,
+      frequency: 0.2 * ACTION_FACTOR,
       action: bird => bird.setAction(ActionTypes.EATING),
     },
   ],
   [ActionTypes.EATING]: [
     {
-      minimum: 830,
+      minimum: (9 / 12) * 1000,
       frequency: 1,
       action: bird => bird.setAction(ActionTypes.IDLE),
     },
   ],
 };
+
+const getTimersForAction = action => ActionTimers[action] || [];
 
 /** A single bird. */
 export default class Bird {
@@ -179,7 +182,7 @@ export default class Bird {
   incrementTimers() {
     for (let i = 0; i < this.actionTimers.length; i++) {
       this.actionTimers[i] += LOOP_SPEED;
-      const timerData = ActionTimers[this.action][i];
+      const timerData = getTimersForAction(this.action)[i];
       if (
         this.actionTimers[i] > timerData.minimum &&
         Math.random() < timerData.frequency
@@ -205,8 +208,7 @@ export default class Bird {
     this.element.src = localURL(
       `src/images/birds/${this.imagePath}/${filename}`
     );
-    const timersForAction = ActionTimers[action] || [];
-    this.actionTimers = new Array(timersForAction.length).fill(0);
+    this.actionTimers = new Array(getTimersForAction(action).length).fill(0);
   }
 
   faceDestination() {
