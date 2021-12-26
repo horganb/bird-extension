@@ -6,7 +6,6 @@
   "background": {
     "service_worker": "build/background.js"
   },
-  "options_page": "options.html",
   "permissions": ["storage"],
   "content_scripts": [
     {
