@@ -10,21 +10,29 @@ export default class BirdType {
 }
 
 export const BLUE_JAY = new BirdType();
+BLUE_JAY.name = 'Blue Jay';
+BLUE_JAY.species = 'Cyanocitta cristata';
 BLUE_JAY.imagePath = 'blueJay';
 BLUE_JAY.speed = 0.3;
 BLUE_JAY.rarity = 1;
 
 export const CARDINAL = new BirdType();
+CARDINAL.name = 'Northern Cardinal';
+CARDINAL.species = 'Cardinalis cardinalis';
 CARDINAL.imagePath = 'cardinal';
 CARDINAL.speed = 0.4;
 CARDINAL.rarity = 2;
 
 export const HOUSE_SPARROW = new BirdType();
+HOUSE_SPARROW.name = 'House Sparrow';
+HOUSE_SPARROW.species = 'Passer domesticus';
 HOUSE_SPARROW.imagePath = 'houseSparrow';
 HOUSE_SPARROW.speed = 0.2;
 HOUSE_SPARROW.rarity = 1;
 
 export const TURKEY = new BirdType();
+TURKEY.name = 'Turkey';
+TURKEY.species = 'Meleagris gallopavo';
 TURKEY.imagePath = 'turkey';
 TURKEY.speed = 0.2;
 TURKEY.rarity = 4;

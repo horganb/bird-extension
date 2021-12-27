@@ -67,6 +67,7 @@ export default class Bird {
     birdElement.className = 'bird-ext-bird';
     dom.appendChild(birdElement);
 
+    this.type = type;
     this.element = birdElement;
     this.location = this.getEdgePoint();
     this.lastLocation = this.location.toPoint();
@@ -142,6 +143,19 @@ export default class Bird {
     queueRemoval(this);
   }
 
+  getFrameURL() {
+    let filename;
+    if (this.action === ActionTypes.FLYING) {
+      filename = 'flying.gif';
+    } else if (this.action === ActionTypes.IDLE) {
+      filename = 'standing.png';
+      this.lastLocation = this.location.toPoint();
+    } else if (this.action === ActionTypes.EATING) {
+      filename = 'eating.gif';
+    }
+    return localURL(`images/birds/${this.imagePath}/${filename}`);
+  }
+
   // Private methods
 
   /** Returns a random Point on the edge of the screen. */
@@ -214,16 +228,7 @@ export default class Bird {
   setAction(action) {
     this.action = action;
     this.subAction = null;
-    let filename;
-    if (action === ActionTypes.FLYING) {
-      filename = 'flying.gif';
-    } else if (action === ActionTypes.IDLE) {
-      filename = 'standing.png';
-      this.lastLocation = this.location.toPoint();
-    } else if (action === ActionTypes.EATING) {
-      filename = 'eating.gif';
-    }
-    this.element.src = localURL(`images/birds/${this.imagePath}/${filename}`);
+    this.element.src = this.getFrameURL();
     this.actionTimers = new Array(getTimersForAction(action).length).fill(0);
   }
 
@@ -262,11 +267,14 @@ export default class Bird {
     this.moveInDirectionTowardDest('y', this.ySpeed * ySpeedFactor);
   }
 
+  getTransform() {
+    return this.direction === Directions.RIGHT ? 'scaleX(-1)' : 'scaleX(1)';
+  }
+
   updateStyles() {
     const elementStyle = this.element.style;
     Object.assign(elementStyle, {
-      transform:
-        this.direction === Directions.RIGHT ? 'scaleX(-1)' : 'scaleX(1)',
+      transform: this.getTransform(),
     });
     if (this.action === ActionTypes.FLYING) {
       const realLeft = this.location.x - this.element.clientWidth / 2;

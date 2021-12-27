@@ -71,3 +71,18 @@ chrome.storage.local.get(null, settings => {
     startBirds();
   }
 });
+
+chrome.runtime.onConnect.addListener(function (port) {
+  if (port.name === 'birdInspector') {
+    port.onMessage.addListener(function (msg) {
+      if (msg.getBird) {
+        port.postMessage({
+          image: activeBirds[0]?.getFrameURL(),
+          transform: activeBirds[0]?.getTransform(),
+          name: activeBirds[0]?.type.name,
+          species: activeBirds[0]?.type.species,
+        });
+      }
+    });
+  }
+});
