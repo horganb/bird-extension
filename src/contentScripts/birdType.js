@@ -24,7 +24,12 @@ HOUSE_SPARROW.imagePath = 'houseSparrow';
 HOUSE_SPARROW.speed = 0.2;
 HOUSE_SPARROW.rarity = 1;
 
-const birdTypes = [BLUE_JAY, CARDINAL, HOUSE_SPARROW];
+export const TURKEY = new BirdType();
+TURKEY.imagePath = 'turkey';
+TURKEY.speed = 0.2;
+TURKEY.rarity = 4;
+
+const birdTypes = [BLUE_JAY, CARDINAL, HOUSE_SPARROW, TURKEY];
 
 let rarityTotal = 0;
 for (const type of birdTypes) {
