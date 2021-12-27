@@ -9,7 +9,8 @@ import { cyan } from '@mui/material/colors';
 
 const CheckboxContainer = styled('div')(({ theme }) => ({
   display: 'flex',
-  alignItems: 'center',
+  flexDirection: 'column',
+  alignItems: 'flex-start',
   whiteSpace: 'nowrap',
   border: `3px outset ${theme.palette.primary.light}`,
   backgroundColor: '#f0fdff',
@@ -37,16 +38,16 @@ const theme = createTheme({
   },
 });
 
-const EnableSwitch = ({ defaultEnabled }) => {
-  const [enabled, setEnabled] = useState(defaultEnabled);
+const EnableSwitch = ({ defaults }) => {
+  const [settings, setSettings] = useState(defaults);
 
-  const setChecked = newChecked => {
-    chrome.storage.local.set({ enabled: newChecked }, () => {
-      setEnabled(newChecked);
+  const changeSetting = (setting, value) => {
+    chrome.storage.local.set({ [setting]: value }, () => {
+      setSettings(oldSettings => ({ ...oldSettings, [setting]: value }));
     });
     chrome.tabs.query({}, tabs => {
       tabs.forEach(tab => {
-        chrome.tabs.sendMessage(tab.id, { enabled: newChecked });
+        chrome.tabs.sendMessage(tab.id, { [setting]: value });
       });
     });
   };
@@ -58,20 +59,29 @@ const EnableSwitch = ({ defaultEnabled }) => {
         <FormControlLabel
           control={
             <Switch
-              checked={enabled}
-              onChange={e => setChecked(e.target.checked)}
+              checked={settings.enabled}
+              onChange={e => changeSetting('enabled', e.target.checked)}
             />
           }
-          label={enabled ? 'Birds Enabled' : 'Birds Disabled'}
+          label={settings.enabled ? 'Birds Enabled' : 'Birds Disabled'}
+        />
+        <FormControlLabel
+          control={
+            <Switch
+              checked={settings.soundsEnabled}
+              onChange={e => changeSetting('soundsEnabled', e.target.checked)}
+            />
+          }
+          label={settings.soundsEnabled ? 'Sounds Enabled' : 'Sounds Disabled'}
         />
       </CheckboxContainer>
     </ThemeProvider>
   );
 };
 
-chrome.storage.local.get(['enabled'], ({ enabled }) => {
+chrome.storage.local.get(null, settingValues => {
   ReactDOM.render(
-    <EnableSwitch defaultEnabled={enabled} />,
+    <EnableSwitch defaults={settingValues} />,
     document.getElementById('app-root')
   );
 });

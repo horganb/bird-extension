@@ -1,6 +1,6 @@
 import { localURL } from './utils';
 import dom from './dom';
-import { LOOP_SPEED, queueRemoval } from './contentScript';
+import { gameOptions, LOOP_SPEED, queueRemoval } from './contentScript';
 import BirdType from './birdType'; // eslint-disable-line no-unused-vars
 import { Platform, PlatformLocation, Point } from './location';
 
@@ -53,6 +53,8 @@ const ActionTimers = {
 
 const getTimersForAction = action => ActionTimers[action] || [];
 
+let mousePosition;
+
 /** A single bird. */
 export default class Bird {
   /**
@@ -76,6 +78,15 @@ export default class Bird {
     this.destination = null;
     this.direction = null;
     this.actionTimers = [];
+
+    window.addEventListener('mousemove', e => {
+      mousePosition = new Point(e.pageX, e.pageY);
+    });
+
+    if (gameOptions.soundsEnabled) {
+      const chirpSound = new Audio(localURL('sounds/chirp.wav'));
+      chirpSound.play();
+    }
 
     this.flyToRandomPlatform();
   }
@@ -110,6 +121,9 @@ export default class Bird {
         this.flyToRandomPlatform();
       } else {
         this.lastLocation = this.location.toPoint();
+        if (mousePosition && this.location.equals(mousePosition, 30)) {
+          this.flyToRandomPlatform();
+        }
       }
     }
     this.updateStyles();

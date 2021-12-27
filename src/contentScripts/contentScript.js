@@ -5,6 +5,8 @@ import './contentScriptStyles.css';
 export const LOOP_SPEED = 10;
 export const MAX_BIRDS = 3;
 
+export const gameOptions = {};
+
 // class TimerEvent {
 //   constructor()
 
@@ -61,16 +63,18 @@ const stopBirds = () => {
   clearInterval(gameInterval);
 };
 
-chrome.runtime.onMessage.addListener(request => {
-  if (request.enabled) {
+chrome.runtime.onMessage.addListener(settings => {
+  Object.assign(gameOptions, settings);
+  if (settings.enabled) {
     startBirds();
-  } else if (request.enabled === false) {
+  } else if (settings.enabled === false) {
     stopBirds();
   }
 });
 
-chrome.storage.local.get(['enabled'], ({ enabled }) => {
-  if (enabled) {
+chrome.storage.local.get(null, settings => {
+  Object.assign(gameOptions, settings);
+  if (settings.enabled) {
     startBirds();
   }
 });
