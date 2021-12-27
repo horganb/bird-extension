@@ -67,7 +67,7 @@ chrome.runtime.onMessage.addListener(settings => {
 
 chrome.storage.local.get(null, settings => {
   Object.assign(gameOptions, settings);
-  if (settings.enabled) {
+  if (gameOptions.enabled) {
     startBirds();
   }
 });
