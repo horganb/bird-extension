@@ -121,7 +121,11 @@ export default class Bird {
         this.flyToRandomPlatform();
       } else {
         this.lastLocation = this.location.toPoint();
-        if (mousePosition && this.location.equals(mousePosition, 30)) {
+        if (
+          gameOptions.flyFromCursor &&
+          mousePosition &&
+          this.location.equals(mousePosition, 30)
+        ) {
           this.flyToRandomPlatform();
         }
       }

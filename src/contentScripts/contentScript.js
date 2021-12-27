@@ -1,19 +1,12 @@
 import { randomBirdType } from './birdType';
 import Bird, { ACTION_FACTOR } from './bird';
 import './contentScriptStyles.css';
+import { defaultSettings } from '../defaultSettings';
 
 export const LOOP_SPEED = 10;
 export const MAX_BIRDS = 3;
 
-export const gameOptions = {};
-
-// class TimerEvent {
-//   constructor()
-
-//   isUp
-// }
-
-// addTimer
+export const gameOptions = { ...defaultSettings };
 
 let activeBirds = [];
 let toRemove = [];

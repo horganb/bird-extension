@@ -6,6 +6,7 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import { localURL } from '../contentScripts/utils';
 import CssBaseline from '@mui/material/CssBaseline';
 import { cyan } from '@mui/material/colors';
+import { defaultSettings } from '../defaultSettings';
 
 const CheckboxContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -52,34 +53,37 @@ const EnableSwitch = ({ defaults }) => {
     });
   };
 
+  const renderToggle = (settingID, enabledDescription, disabledDescription) => {
+    return (
+      <FormControlLabel
+        control={
+          <Switch
+            checked={settings[settingID]}
+            onChange={e => changeSetting(settingID, e.target.checked)}
+          />
+        }
+        label={settings[settingID] ? enabledDescription : disabledDescription}
+      />
+    );
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <CheckboxContainer>
-        <FormControlLabel
-          control={
-            <Switch
-              checked={settings.enabled}
-              onChange={e => changeSetting('enabled', e.target.checked)}
-            />
-          }
-          label={settings.enabled ? 'Birds Enabled' : 'Birds Disabled'}
-        />
-        <FormControlLabel
-          control={
-            <Switch
-              checked={settings.soundsEnabled}
-              onChange={e => changeSetting('soundsEnabled', e.target.checked)}
-            />
-          }
-          label={settings.soundsEnabled ? 'Sounds Enabled' : 'Sounds Disabled'}
-        />
+        {renderToggle('enabled', 'Birds Enabled', 'Birds Disabled')}
+        {renderToggle('soundsEnabled', 'Sounds Enabled', 'Sounds Disabled')}
+        {renderToggle(
+          'flyFromCursor',
+          'Birds Fly From Cursor',
+          "Birds Don't Fly From Cursor"
+        )}
       </CheckboxContainer>
     </ThemeProvider>
   );
 };
 
-chrome.storage.local.get(null, settingValues => {
+chrome.storage.local.get(defaultSettings, settingValues => {
   ReactDOM.render(
     <EnableSwitch defaults={settingValues} />,
     document.getElementById('app-root')
