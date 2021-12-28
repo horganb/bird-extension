@@ -109,8 +109,8 @@ const BirdIndicator = () => {
           }
           setBirdPos(
             bird.current && [
-              bird.current.getBirdLeft(),
-              bird.current.getBirdTop(),
+              bird.current.location.x,
+              bird.current.location.y - bird.current.getHeight(),
             ]
           );
         });
@@ -127,7 +127,8 @@ const BirdIndicator = () => {
       style={{
         position: 'absolute',
         left: `${birdPos[0]}px`,
-        top: `${birdPos[1] - 10}px`,
+        top: `${birdPos[1]}px`,
+        transform: 'translateX(-50%) translateY(-75%)',
       }}
     />
   ) : (
