@@ -128,6 +128,9 @@ const EnableSwitch = ({ defaults }) => {
           index={currentTab}
           onChangeIndex={newVal => setCurrentTab(newVal)}
           style={{ width: '100%' }}
+          containerStyle={{
+            transition: 'transform 0.35s cubic-bezier(0.15, 0.3, 0.25, 1) 0s',
+          }}
         >
           <TabPanel value={currentTab} index={0}>
             {birdName ? (
