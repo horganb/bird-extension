@@ -76,6 +76,8 @@ const Popup = ({ defaults }) => {
   const [birdName, setBirdName] = useState();
   const [birdSpecies, setBirdSpecies] = useState();
   const [currentTab, setCurrentTab] = useState(0);
+  const [birdIndex, setBirdIndex] = useState(0);
+  const [numBirds, setNumBirds] = useState(0);
 
   const birdInspectorPort = useRef();
 
@@ -90,6 +92,8 @@ const Popup = ({ defaults }) => {
         setBirdTransform(msg.transform);
         setBirdName(msg.name);
         setBirdSpecies(msg.species);
+        setBirdIndex(msg.index);
+        setNumBirds(msg.numBirds);
         birdInspectorPort.current.postMessage({ getBird: true });
       });
     });
@@ -160,6 +164,9 @@ const Popup = ({ defaults }) => {
                   <ChevronLeftIcon />
                 </IconButton>
                 <BirdDetailsContainer>
+                  <h5 style={{ margin: 0, textAlign: 'center' }}>
+                    {birdIndex + 1}/{numBirds}
+                  </h5>
                   <h2 style={{ margin: 0, textAlign: 'center' }}>{birdName}</h2>
                   <h4
                     style={{
@@ -191,7 +198,7 @@ const Popup = ({ defaults }) => {
                   textAlign: 'center',
                 }}
               >
-                Birds will show up here once they're on your screen!
+                Birds will visit soon! Hang in there!
               </p>
             )}
           </TabPanel>

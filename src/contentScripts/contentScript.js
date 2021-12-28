@@ -4,7 +4,7 @@ import { randomBirdType } from './birdType';
 import Bird, { ACTION_FACTOR } from './bird';
 import './contentScriptStyles.css';
 import { defaultSettings } from '../defaultSettings';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import birdContainer from './dom';
 
 export const LOOP_SPEED = 10;
@@ -93,6 +93,8 @@ const BirdIndicator = () => {
               transform: bird.current?.getTransform(),
               name: bird.current?.type.name,
               species: bird.current?.type.species,
+              index: activeBirds.indexOf(bird.current),
+              numBirds: activeBirds.length,
             });
           }
           if (msg.left) {
@@ -122,13 +124,18 @@ const BirdIndicator = () => {
   }, []);
 
   return birdPos ? (
-    <ArrowDropDownIcon
-      color={'error'}
+    <ArrowDropDownOutlinedIcon
       style={{
         position: 'absolute',
         left: `${birdPos[0]}px`,
         top: `${birdPos[1]}px`,
         transform: 'translateX(-50%) translateY(-75%)',
+        zIndex: 2147483647,
+        pointerEvents: 'none',
+        animationName: 'arrowFlash',
+        animationDuration: '3s',
+        animationIterationCount: 'infinite',
+        animationTimingFunction: 'linear',
       }}
     />
   ) : (
