@@ -72,16 +72,33 @@ chrome.storage.local.get(null, settings => {
   }
 });
 
+let currentBird;
+
 chrome.runtime.onConnect.addListener(function (port) {
   if (port.name === 'birdInspector') {
     port.onMessage.addListener(function (msg) {
       if (msg.getBird) {
+        if (!currentBird || !activeBirds.includes(currentBird)) {
+          currentBird = activeBirds[0];
+        }
         port.postMessage({
-          image: activeBirds[0]?.getFrameURL(),
-          transform: activeBirds[0]?.getTransform(),
-          name: activeBirds[0]?.type.name,
-          species: activeBirds[0]?.type.species,
+          image: currentBird?.getFrameURL(),
+          transform: currentBird?.getTransform(),
+          name: currentBird?.type.name,
+          species: currentBird?.type.species,
         });
+      }
+      if (msg.left) {
+        const currentIndex = activeBirds.indexOf(currentBird);
+        if (currentIndex === 0) {
+          currentBird = activeBirds[activeBirds.length - 1];
+        } else {
+          currentBird = activeBirds[currentIndex - 1];
+        }
+      }
+      if (msg.right) {
+        const currentIndex = activeBirds.indexOf(currentBird);
+        currentBird = activeBirds[(currentIndex + 1) % activeBirds.length];
       }
     });
   }

@@ -1,16 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { localURL } from '../contentScripts/utils';
+import SwipeableViews from 'react-swipeable-views';
+import { defaultSettings } from '../defaultSettings';
+
+import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
+import { cyan, pink } from '@mui/material/colors';
 import Switch from '@mui/material/Switch';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
-import { localURL } from '../contentScripts/utils';
 import CssBaseline from '@mui/material/CssBaseline';
-import { cyan, pink } from '@mui/material/colors';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import SwipeableViews from 'react-swipeable-views';
-import { defaultSettings } from '../defaultSettings';
+import IconButton from '@mui/material/IconButton';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
 const PopupContainer = styled('div')(({ theme }) => ({
   display: 'flex',
@@ -22,6 +26,11 @@ const PopupContainer = styled('div')(({ theme }) => ({
 }));
 
 const BirdInspectorContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'space-between',
+}));
+
+const BirdDetailsContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -60,7 +69,7 @@ const theme = createTheme({
   },
 });
 
-const EnableSwitch = ({ defaults }) => {
+const Popup = ({ defaults }) => {
   const [settings, setSettings] = useState(defaults);
   const [birdImageURL, setBirdImageURL] = useState();
   const [birdTransform, setBirdTransform] = useState();
@@ -68,19 +77,31 @@ const EnableSwitch = ({ defaults }) => {
   const [birdSpecies, setBirdSpecies] = useState();
   const [currentTab, setCurrentTab] = useState(0);
 
+  const birdInspectorPort = useRef();
+
   useEffect(() => {
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      var port = chrome.tabs.connect(tabs[0].id, { name: 'birdInspector' });
-      port.postMessage({ getBird: true });
-      port.onMessage.addListener(msg => {
+      birdInspectorPort.current = chrome.tabs.connect(tabs[0].id, {
+        name: 'birdInspector',
+      });
+      birdInspectorPort.current.postMessage({ getBird: true });
+      birdInspectorPort.current.onMessage.addListener(msg => {
         setBirdImageURL(msg.image);
         setBirdTransform(msg.transform);
         setBirdName(msg.name);
         setBirdSpecies(msg.species);
-        port.postMessage({ getBird: true });
+        birdInspectorPort.current.postMessage({ getBird: true });
       });
     });
   }, []);
+
+  const leftBird = () => {
+    birdInspectorPort.current?.postMessage({ left: true });
+  };
+
+  const rightBird = () => {
+    birdInspectorPort.current?.postMessage({ right: true });
+  };
 
   const changeSetting = (setting, value) => {
     chrome.storage.local.set({ [setting]: value }, () => {
@@ -135,18 +156,32 @@ const EnableSwitch = ({ defaults }) => {
           <TabPanel value={currentTab} index={0}>
             {birdName ? (
               <BirdInspectorContainer>
-                <h2 style={{ margin: 0 }}>{birdName}</h2>
-                <h4 style={{ margin: 0, fontStyle: 'italic' }}>
-                  {birdSpecies}
-                </h4>
-                <img
-                  src={birdImageURL}
-                  style={{
-                    transform: birdTransform,
-                    width: '40px',
-                    height: 'auto',
-                  }}
-                />
+                <IconButton onClick={leftBird}>
+                  <ChevronLeftIcon />
+                </IconButton>
+                <BirdDetailsContainer>
+                  <h2 style={{ margin: 0, textAlign: 'center' }}>{birdName}</h2>
+                  <h4
+                    style={{
+                      margin: 0,
+                      textAlign: 'center',
+                      fontStyle: 'italic',
+                    }}
+                  >
+                    {birdSpecies}
+                  </h4>
+                  <img
+                    src={birdImageURL}
+                    style={{
+                      transform: birdTransform,
+                      width: '40px',
+                      height: 'auto',
+                    }}
+                  />
+                </BirdDetailsContainer>
+                <IconButton onClick={rightBird}>
+                  <ChevronRightIcon />
+                </IconButton>
               </BirdInspectorContainer>
             ) : (
               <p
@@ -183,7 +218,7 @@ const EnableSwitch = ({ defaults }) => {
 
 chrome.storage.local.get(defaultSettings, settingValues => {
   ReactDOM.render(
-    <EnableSwitch defaults={settingValues} />,
+    <Popup defaults={settingValues} />,
     document.getElementById('app-root')
   );
 });
