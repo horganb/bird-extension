@@ -1,43 +1,41 @@
-export default class BirdType {
-  /** Path to bird animations. */
-  imagePath;
-
-  /** Speed of bird, in pixels/second. */
-  speed;
-
-  /** How rare the bird is. */
-  rarity;
-}
-
-export const BLUE_JAY = new BirdType();
-BLUE_JAY.name = 'Blue Jay';
-BLUE_JAY.species = 'Cyanocitta cristata';
-BLUE_JAY.imagePath = 'blueJay';
-BLUE_JAY.speed = 0.3;
-BLUE_JAY.rarity = 1;
-
-export const CARDINAL = new BirdType();
-CARDINAL.name = 'Northern Cardinal';
-CARDINAL.species = 'Cardinalis cardinalis';
-CARDINAL.imagePath = 'cardinal';
-CARDINAL.speed = 0.4;
-CARDINAL.rarity = 2;
-
-export const HOUSE_SPARROW = new BirdType();
-HOUSE_SPARROW.name = 'House Sparrow';
-HOUSE_SPARROW.species = 'Passer domesticus';
-HOUSE_SPARROW.imagePath = 'houseSparrow';
-HOUSE_SPARROW.speed = 0.2;
-HOUSE_SPARROW.rarity = 1;
-
-export const TURKEY = new BirdType();
-TURKEY.name = 'Turkey';
-TURKEY.species = 'Meleagris gallopavo';
-TURKEY.imagePath = 'turkey';
-TURKEY.speed = 0.2;
-TURKEY.rarity = 4;
-
-const birdTypes = [BLUE_JAY, CARDINAL, HOUSE_SPARROW, TURKEY];
+const birdTypes = [
+  {
+    name: 'Blue Jay',
+    species: 'Cyanocitta cristata',
+    imagePath: 'blueJay',
+    speed: 0.3,
+    rarity: 1,
+    wingspan: [34, 43],
+    mass: [70, 100],
+  },
+  {
+    name: 'Northern Cardinal',
+    species: 'Cardinalis cardinalis',
+    imagePath: 'cardinal',
+    speed: 0.4,
+    rarity: 2,
+    wingspan: [25, 31],
+    mass: [33.6, 65],
+  },
+  {
+    name: 'House Sparrow',
+    species: 'Passer domesticus',
+    imagePath: 'houseSparrow',
+    speed: 0.2,
+    rarity: 1,
+    wingspan: [19, 25],
+    mass: [24, 39.5],
+  },
+  {
+    name: 'Turkey',
+    species: 'Meleagris gallopavo',
+    imagePath: 'turkey',
+    speed: 0.2,
+    rarity: 4,
+    wingspan: [125, 144],
+    mass: [5000, 11000],
+  },
+];
 
 let rarityTotal = 0;
 for (const type of birdTypes) {

@@ -1,7 +1,11 @@
+import React, { useEffect, useRef, useState } from 'react';
+import ReactDOM from 'react-dom';
 import { randomBirdType } from './birdType';
 import Bird, { ACTION_FACTOR } from './bird';
 import './contentScriptStyles.css';
 import { defaultSettings } from '../defaultSettings';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import birdContainer from './dom';
 
 export const LOOP_SPEED = 10;
 export const MAX_BIRDS = 3;
@@ -72,34 +76,63 @@ chrome.storage.local.get(null, settings => {
   }
 });
 
-let currentBird;
+const BirdIndicator = () => {
+  const bird = useRef();
+  const [birdPos, setBirdPos] = useState();
 
-chrome.runtime.onConnect.addListener(function (port) {
-  if (port.name === 'birdInspector') {
-    port.onMessage.addListener(function (msg) {
-      if (msg.getBird) {
-        if (!currentBird || !activeBirds.includes(currentBird)) {
-          currentBird = activeBirds[0];
-        }
-        port.postMessage({
-          image: currentBird?.getFrameURL(),
-          transform: currentBird?.getTransform(),
-          name: currentBird?.type.name,
-          species: currentBird?.type.species,
+  useEffect(() => {
+    chrome.runtime.onConnect.addListener(function (port) {
+      if (port.name === 'birdInspector') {
+        port.onMessage.addListener(function (msg) {
+          if (msg.getBird) {
+            if (!bird.current || !activeBirds.includes(bird.current)) {
+              bird.current = activeBirds[0];
+            }
+            port.postMessage({
+              image: bird.current?.getFrameURL(),
+              transform: bird.current?.getTransform(),
+              name: bird.current?.type.name,
+              species: bird.current?.type.species,
+            });
+          }
+          if (msg.left) {
+            const currentIndex = activeBirds.indexOf(bird.current);
+            if (currentIndex === 0) {
+              bird.current = activeBirds[activeBirds.length - 1];
+            } else {
+              bird.current = activeBirds[currentIndex - 1];
+            }
+          }
+          if (msg.right) {
+            const currentIndex = activeBirds.indexOf(bird.current);
+            bird.current = activeBirds[(currentIndex + 1) % activeBirds.length];
+          }
+          setBirdPos(
+            bird.current && [
+              bird.current.getBirdLeft(),
+              bird.current.getBirdTop(),
+            ]
+          );
+        });
+        port.onDisconnect.addListener(() => {
+          setBirdPos();
         });
       }
-      if (msg.left) {
-        const currentIndex = activeBirds.indexOf(currentBird);
-        if (currentIndex === 0) {
-          currentBird = activeBirds[activeBirds.length - 1];
-        } else {
-          currentBird = activeBirds[currentIndex - 1];
-        }
-      }
-      if (msg.right) {
-        const currentIndex = activeBirds.indexOf(currentBird);
-        currentBird = activeBirds[(currentIndex + 1) % activeBirds.length];
-      }
     });
-  }
-});
+  }, []);
+
+  return birdPos ? (
+    <ArrowDropDownIcon
+      color={'error'}
+      style={{
+        position: 'absolute',
+        left: `${birdPos[0]}px`,
+        top: `${birdPos[1] - 10}px`,
+      }}
+    />
+  ) : (
+    <div>i</div>
+  );
+};
+
+ReactDOM.render(<BirdIndicator />, birdContainer);

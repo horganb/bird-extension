@@ -1,7 +1,6 @@
 import { localURL } from './utils';
 import dom from './dom';
 import { gameOptions, LOOP_SPEED, queueRemoval } from './contentScript';
-import BirdType from './birdType'; // eslint-disable-line no-unused-vars
 import { Platform, PlatformLocation, Point } from './location';
 
 const BIRD_SIZE = 16;
@@ -60,7 +59,7 @@ export default class Bird {
   /**
    * Creates and spawns a bird.
    *
-   * @param {BirdType} type Type of bird.
+   * @param {Object} type Type of bird.
    */
   constructor(type) {
     const birdElement = document.createElement('IMG');
@@ -271,17 +270,23 @@ export default class Bird {
     return this.direction === Directions.RIGHT ? 'scaleX(-1)' : 'scaleX(1)';
   }
 
+  getBirdLeft() {
+    return this.location.x - this.element.clientWidth / 2;
+  }
+
+  getBirdTop() {
+    return this.location.y - this.element.clientHeight;
+  }
+
   updateStyles() {
     const elementStyle = this.element.style;
     Object.assign(elementStyle, {
       transform: this.getTransform(),
     });
     if (this.action === ActionTypes.FLYING) {
-      const realLeft = this.location.x - this.element.clientWidth / 2;
-      const realTop = this.location.y - this.element.clientHeight;
       Object.assign(elementStyle, {
-        left: `${realLeft}px`,
-        top: `${realTop}px`,
+        left: `${this.getBirdLeft()}px`,
+        top: `${this.getBirdTop()}px`,
       });
     }
   }
