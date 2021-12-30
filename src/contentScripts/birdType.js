@@ -9,6 +9,15 @@ const birdTypes = [
     mass: [70, 100],
   },
   {
+    name: 'Indigo Bunting',
+    species: 'Passerina cyanea',
+    imagePath: 'indigoBunting',
+    speed: 0.25,
+    rarity: 2,
+    wingspan: [18, 23],
+    mass: [11.2, 21.4],
+  },
+  {
     name: 'Northern Cardinal',
     species: 'Cardinalis cardinalis',
     imagePath: 'cardinal',
