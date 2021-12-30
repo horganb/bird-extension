@@ -13,6 +13,9 @@ import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import IconButton from '@mui/material/IconButton';
+import Slider from '@mui/material/Slider';
+import Typography from '@mui/material/Typography';
+
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 
@@ -30,7 +33,7 @@ const BirdInspectorContainer = styled('div')(({ theme }) => ({
   justifyContent: 'space-between',
 }));
 
-const BirdDetailsContainer = styled('div')(({ theme }) => ({
+const CenteredFlexColumn = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
@@ -163,7 +166,7 @@ const Popup = ({ defaults }) => {
                 <IconButton onClick={leftBird}>
                   <ChevronLeftIcon />
                 </IconButton>
-                <BirdDetailsContainer>
+                <CenteredFlexColumn>
                   <h5 style={{ margin: 0, textAlign: 'center' }}>
                     {birdIndex + 1}/{numBirds}
                   </h5>
@@ -185,7 +188,7 @@ const Popup = ({ defaults }) => {
                       height: 'auto',
                     }}
                   />
-                </BirdDetailsContainer>
+                </CenteredFlexColumn>
                 <IconButton onClick={rightBird}>
                   <ChevronRightIcon />
                 </IconButton>
@@ -215,6 +218,17 @@ const Popup = ({ defaults }) => {
                 'Birds Fly From Cursor',
                 "Birds Don't Fly From Cursor"
               )}
+              <CenteredFlexColumn style={{ width: '100%' }}>
+                <Typography>Bird Limit</Typography>
+                <Slider
+                  value={settings.maxBirds}
+                  onChange={(e, newVal) => changeSetting('maxBirds', newVal)}
+                  valueLabelDisplay="auto"
+                  min={1}
+                  max={10}
+                  sx={{ maxWidth: '90%' }}
+                />
+              </CenteredFlexColumn>
             </CheckboxContainer>
           </TabPanel>
         </SwipeableViews>

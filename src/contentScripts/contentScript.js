@@ -8,7 +8,6 @@ import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined
 import birdContainer from './dom';
 
 export const LOOP_SPEED = 10;
-export const MAX_BIRDS = 3;
 
 export const gameOptions = { ...defaultSettings };
 
@@ -32,13 +31,21 @@ const mainLoop = () => {
     return;
   }
 
-  if (activeBirds.length < MAX_BIRDS && Math.random() < 0.5 * ACTION_FACTOR) {
+  if (
+    activeBirds.length < gameOptions.maxBirds &&
+    Math.random() < 0.5 * ACTION_FACTOR
+  ) {
     spawn(randomBirdType());
   }
   activeBirds.forEach(bird => {
     bird.update();
   });
   activeBirds = activeBirds.filter(bird => !toRemove.includes(bird));
+  // remove birds that exceed the maxBirds setting
+  for (let i = activeBirds.length - 1; i >= gameOptions.maxBirds; i--) {
+    activeBirds[i].remove();
+    activeBirds.pop();
+  }
   toRemove = [];
 };
 
