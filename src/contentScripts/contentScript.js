@@ -165,9 +165,7 @@ const BirdIndicator = () => {
         animationTimingFunction: 'linear',
       }}
     />
-  ) : (
-    <div>i</div>
-  );
+  ) : null;
 };
 
 ReactDOM.render(<BirdIndicator />, birdContainer);
