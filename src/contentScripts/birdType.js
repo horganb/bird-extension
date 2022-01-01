@@ -62,6 +62,15 @@ const birdTypes = [
     wingspan: [125, 144],
     mass: [5000, 11000],
   },
+  {
+    name: 'Release dove',
+    species: 'Columba livia domestica',
+    imagePath: 'dove',
+    speed: 0.2,
+    rarity: 2,
+    wingspan: [62, 72],
+    mass: [238, 380],
+  },
 ];
 
 let rarityTotal = 0;
