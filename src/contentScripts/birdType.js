@@ -63,13 +63,22 @@ const birdTypes = [
     mass: [5000, 11000],
   },
   {
-    name: 'Release dove',
+    name: 'Release Dove',
     species: 'Columba livia domestica',
     imagePath: 'dove',
-    speed: 0.2,
+    speed: 0.25,
     rarity: 2,
     wingspan: [62, 72],
     mass: [238, 380],
+  },
+  {
+    name: 'Rainbow Lorikeet',
+    species: 'Trichoglossus moluccanus',
+    imagePath: 'rainbowLorikeet',
+    speed: 0.3,
+    rarity: 4,
+    wingspan: [25, 30],
+    mass: [75, 157],
   },
 ];
 
