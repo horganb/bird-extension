@@ -6,6 +6,7 @@ import './contentScriptStyles.css';
 import { defaultSettings } from '../defaultSettings';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import birdContainer from './dom';
+import { getDomain } from '../utils';
 
 export const LOOP_SPEED = 10;
 
@@ -67,18 +68,37 @@ const stopBirds = () => {
   clearInterval(gameInterval);
 };
 
+const getCurrentDomain = () => {
+  return getDomain(window.location.href);
+};
+
+const enabledOnThisSite = options => {
+  return !options.blockedSites.includes(getCurrentDomain());
+};
+
 chrome.runtime.onMessage.addListener(settings => {
-  Object.assign(gameOptions, settings);
-  if (settings.enabled) {
-    startBirds();
-  } else if (settings.enabled === false) {
-    stopBirds();
+  if (settings.enabled !== undefined) {
+    if (settings.enabled && !gameOptions.enabled) {
+      startBirds();
+    } else if (!settings.enabled && gameOptions.enabled) {
+      stopBirds();
+    }
   }
+
+  if (settings.blockedSites !== undefined) {
+    if (enabledOnThisSite(settings) && !enabledOnThisSite(gameOptions)) {
+      startBirds();
+    } else if (!enabledOnThisSite(settings) && enabledOnThisSite(gameOptions)) {
+      stopBirds();
+    }
+  }
+
+  Object.assign(gameOptions, settings);
 });
 
 chrome.storage.local.get(null, settings => {
   Object.assign(gameOptions, settings);
-  if (gameOptions.enabled) {
+  if (gameOptions.enabled && enabledOnThisSite(gameOptions)) {
     startBirds();
   }
 });

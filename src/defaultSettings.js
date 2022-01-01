@@ -3,4 +3,5 @@ export const defaultSettings = {
   soundsEnabled: false,
   flyFromCursor: true,
   maxBirds: 3,
+  blockedSites: [],
 };

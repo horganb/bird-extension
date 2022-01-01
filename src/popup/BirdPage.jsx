@@ -3,6 +3,8 @@ import IconButton from '@mui/material/IconButton';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { BirdInspectorContainer, CenteredFlexColumn } from './styles';
+import { defaultSettings } from '../defaultSettings';
+import { getDomain } from '../utils';
 
 const BirdPage = () => {
   const [birdImageURL, setBirdImageURL] = useState();
@@ -11,6 +13,8 @@ const BirdPage = () => {
   const [birdSpecies, setBirdSpecies] = useState();
   const [birdIndex, setBirdIndex] = useState(0);
   const [numBirds, setNumBirds] = useState(0);
+  const [settings, setSettings] = useState(defaultSettings);
+  const [currentDomain, setCurrentDomain] = useState();
 
   const birdInspectorPort = useRef();
 
@@ -30,6 +34,13 @@ const BirdPage = () => {
         birdInspectorPort.current.postMessage({ getBird: true });
       });
     });
+
+    chrome.storage.local.get(defaultSettings, settingValues => {
+      setSettings(settingValues);
+    });
+    chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+      setCurrentDomain(getDomain(tabs[0].url));
+    });
   }, []);
 
   const leftBird = () => {
@@ -40,7 +51,20 @@ const BirdPage = () => {
     birdInspectorPort.current?.postMessage({ right: true });
   };
 
-  return birdName ? (
+  const disabledOnThisSite = settings.blockedSites.includes(currentDomain);
+  const disabled = disabledOnThisSite || !settings.enabled;
+
+  return disabled ? (
+    <p
+      style={{
+        opacity: 0.8,
+        fontStyle: 'italic',
+        textAlign: 'center',
+      }}
+    >
+      Birds are disabled! To change this, click "Settings."
+    </p>
+  ) : birdName ? (
     <BirdInspectorContainer>
       <IconButton onClick={leftBird}>
         <ChevronLeftIcon />
