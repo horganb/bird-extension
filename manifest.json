@@ -1,7 +1,7 @@
 {
   "name": "Birdwatcher",
   "description": "Watch 'em fly!",
-  "version": "1.0",
+  "version": "1.0.1",
   "manifest_version": 3,
   "permissions": ["storage", "tabs"],
   "content_scripts": [
