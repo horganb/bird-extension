@@ -5,7 +5,6 @@ module.exports = {
   devtool: false,
   entry: {
     contentScript: './src/contentScripts/contentScript.js',
-    background: './src/background/background.js',
     popup: './src/popup/popup.js',
   },
   module: {

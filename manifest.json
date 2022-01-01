@@ -3,9 +3,6 @@
   "description": "Watch 'em fly!",
   "version": "1.0",
   "manifest_version": 3,
-  "background": {
-    "service_worker": "build/background.js"
-  },
   "permissions": ["storage", "tabs"],
   "content_scripts": [
     {
