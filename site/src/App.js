@@ -25,31 +25,33 @@ const CustomStepper = ({ steps }) => {
     <Stepper activeStep={activeStep} orientation="vertical">
       {steps.map(({ title, content }, index) => {
         return (
-          <Step key={index}>
+          <Step key={index} expanded completed={false}>
             <StepLabel>
               <Typography variant="h5">{title}</Typography>
             </StepLabel>
             <StepContent>
               {content}
-              <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button
-                    disabled={index === lastStep}
-                    variant="contained"
-                    onClick={() => setActiveStep(step => step + 1)}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Continue
-                  </Button>
-                  <Button
-                    disabled={index === 0}
-                    onClick={() => setActiveStep(step => step - 1)}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Back
-                  </Button>
-                </div>
-              </Box>
+              {activeStep === index && (
+                <Box sx={{ mb: 2 }}>
+                  <div>
+                    <Button
+                      disabled={index === lastStep}
+                      variant="contained"
+                      onClick={() => setActiveStep(step => step + 1)}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      Continue
+                    </Button>
+                    <Button
+                      disabled={index === 0}
+                      onClick={() => setActiveStep(step => step - 1)}
+                      sx={{ mt: 1, mr: 1 }}
+                    >
+                      Back
+                    </Button>
+                  </div>
+                </Box>
+              )}
             </StepContent>
           </Step>
         );
