@@ -17,6 +17,7 @@ import React, { useState } from 'react';
 
 import './App.css';
 import { theme } from './styles';
+import { isEdgeBrowser } from './utils';
 
 const CustomStepper = ({ steps }) => {
   const [activeStep, setActiveStep] = useState(0);
@@ -65,65 +66,73 @@ const CustomStepper = ({ steps }) => {
 };
 
 const App = () => {
+  const steps = [
+    {
+      title: 'Viewing Birds',
+      content: (
+        <>
+          <Typography>
+            Click the new &nbsp;
+            <img src="images/icon.png" alt="bird" />
+            &nbsp; in the top right corner of your browser.
+          </Typography>
+          <Typography>
+            Here you can view info about the birds on your screen!
+          </Typography>
+          <Typography>
+            Cycle through them with &nbsp;
+            <ChevronLeftIcon
+              fontSize="small"
+              style={{ verticalAlign: 'top' }}
+            />
+            &nbsp; and &nbsp;
+            <ChevronRightIcon
+              fontSize="small"
+              style={{ verticalAlign: 'top' }}
+            />
+            &nbsp;
+          </Typography>
+        </>
+      ),
+    },
+  ];
+
+  if (!isEdgeBrowser) {
+    steps.unshift({
+      title: 'Getting Started',
+      content: (
+        <>
+          <Typography>
+            Click the &nbsp;
+            <ExtensionIcon fontSize="small" style={{ verticalAlign: 'top' }} />
+            &nbsp; located in the top right corner of your browser.
+          </Typography>
+          <Typography>
+            Then click the &nbsp;
+            <PushPinIcon fontSize="small" style={{ verticalAlign: 'top' }} />
+            &nbsp; next to Birdwatcher.
+          </Typography>
+        </>
+      ),
+    });
+  }
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <div className="App">
-        <CustomStepper
-          steps={[
-            {
-              title: 'Getting Started',
-              content: (
-                <>
-                  <Typography>
-                    Click the &nbsp;
-                    <ExtensionIcon
-                      fontSize="small"
-                      style={{ verticalAlign: 'top' }}
-                    />
-                    &nbsp; located in the top right corner of your browser.
-                  </Typography>
-                  <Typography>
-                    Then click the &nbsp;
-                    <PushPinIcon
-                      fontSize="small"
-                      style={{ verticalAlign: 'top' }}
-                    />
-                    &nbsp; next to Birdwatcher.
-                  </Typography>
-                </>
-              ),
-            },
-            {
-              title: 'Viewing Birds',
-              content: (
-                <>
-                  <Typography>
-                    Click the new &nbsp;
-                    <img src="images/icon.png" alt="bird" />
-                    &nbsp; in the top right corner of your browser.
-                  </Typography>
-                  <Typography>
-                    Here you can view info about the birds on your screen!
-                  </Typography>
-                  <Typography>
-                    Cycle through them with &nbsp;
-                    <ChevronLeftIcon
-                      fontSize="small"
-                      style={{ verticalAlign: 'top' }}
-                    />
-                    &nbsp; and &nbsp;
-                    <ChevronRightIcon
-                      fontSize="small"
-                      style={{ verticalAlign: 'top' }}
-                    />
-                    &nbsp;
-                  </Typography>
-                </>
-              ),
-            },
-          ]}
-        />
+        <Typography variant="h3" style={{ margin: '4rem' }}>
+          Welcome to{' '}
+          <Typography
+            variant="h3"
+            style={{ display: 'inline' }}
+            color="primary"
+          >
+            Birdwatcher
+          </Typography>
+          !
+        </Typography>
+        <CustomStepper steps={steps} />
       </div>
     </ThemeProvider>
   );
