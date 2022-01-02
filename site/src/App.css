@@ -2,8 +2,7 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
-  padding-left: 38%;
+  align-items: center;
   justify-content: center;
   background-color: rgb(255, 236, 236);
 }

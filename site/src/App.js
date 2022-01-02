@@ -36,16 +36,18 @@ const CustomStepper = ({ steps }) => {
               {activeStep === index && (
                 <Box sx={{ mb: 2 }}>
                   <div>
-                    <Button
-                      disabled={index === lastStep}
-                      variant="contained"
-                      onClick={() => setActiveStep(step => step + 1)}
-                      sx={{ mt: 1, mr: 1 }}
-                    >
-                      Continue
-                    </Button>
+                    {index < lastStep && (
+                      <Button
+                        variant="contained"
+                        onClick={() => setActiveStep(step => step + 1)}
+                        sx={{ mt: 1, mr: 1 }}
+                      >
+                        Continue
+                      </Button>
+                    )}
                     <Button
                       disabled={index === 0}
+                      variant="outlined"
                       onClick={() => setActiveStep(step => step - 1)}
                       sx={{ mt: 1, mr: 1 }}
                     >
