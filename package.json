@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "To build for development:",
   "main": "background.js",
+  "type": "module",
   "scripts": {
     "dev": "webpack",
     "build": "webpack --node-env production",

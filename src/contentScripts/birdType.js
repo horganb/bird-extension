@@ -82,7 +82,7 @@ const birdTypes = [
   },
 ];
 
-let rarityTotal = 0;
+export let rarityTotal = 0;
 for (const type of birdTypes) {
   rarityTotal += 1 / type.rarity;
 }
