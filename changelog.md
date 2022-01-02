@@ -3,6 +3,7 @@
 ### Added
 
 - Added help site that opens after installation
+- Added warning on pages (e.g. new tab, web store) where birds are unavailable
 
 ### Changed
 
