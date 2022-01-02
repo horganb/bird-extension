@@ -49,7 +49,7 @@ export const isElementVisible = elem => {
   if (style.display === 'none') return false;
   if (style.visibility !== 'visible') return false;
   if (style.opacity < 0.1) return false;
-  if (parseInt(style.color.split(',')[3]) === 0) return false;
+  // if (parseInt(style.color.split(',')[3]) === 0) return false;
   // TODO: move all this viewport comparison logic to the text node rects
   if (
     elem.clientWidth +

@@ -192,7 +192,10 @@ export default class Bird {
     const validPlatforms = Platform.getVisiblePlatforms();
     const targetPlatform =
       validPlatforms[Math.floor(Math.random() * validPlatforms.length)];
-    if (!targetPlatform) return;
+    if (!targetPlatform) {
+      this.flyOffscreen();
+      return;
+    }
     const destination = PlatformLocation.generateRandom(targetPlatform);
     this.flyToLocation(destination);
   }

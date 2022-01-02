@@ -16,67 +16,34 @@ import React, { useState } from 'react';
 import './App.css';
 import { theme } from './styles';
 
-function App() {
+const CustomStepper = ({ steps }) => {
   const [activeStep, setActiveStep] = useState(0);
 
+  const lastStep = steps.length - 1;
+
   return (
-    <ThemeProvider theme={theme}>
-      <div className="App">
-        <CssBaseline />
-        <Stepper activeStep={activeStep} orientation="vertical">
-          <Step>
+    <Stepper activeStep={activeStep} orientation="vertical">
+      {steps.map(({ title, content }, index) => {
+        return (
+          <Step key={index}>
             <StepLabel>
-              <Typography variant="h5">Getting started</Typography>
+              <Typography variant="h5">{title}</Typography>
             </StepLabel>
             <StepContent>
-              <Typography>
-                Click the &nbsp;
-                <ExtensionIcon
-                  fontSize="small"
-                  style={{ verticalAlign: 'top' }}
-                />
-                &nbsp; located in the top right corner of your browser.
-              </Typography>
-              <Typography>
-                Then click the &nbsp;
-                <PushPinIcon
-                  fontSize="small"
-                  style={{ verticalAlign: 'top' }}
-                />
-                &nbsp; next to Birdwatcher.
-              </Typography>
+              {content}
               <Box sx={{ mb: 2 }}>
                 <div>
                   <Button
+                    disabled={index === lastStep}
                     variant="contained"
-                    onClick={() => setActiveStep(1)}
-                    sx={{ mt: 1, mr: 1 }}
-                  >
-                    Continue
-                  </Button>
-                  <Button disabled sx={{ mt: 1, mr: 1 }}>
-                    Back
-                  </Button>
-                </div>
-              </Box>
-            </StepContent>
-          </Step>
-          <Step>
-            <StepLabel>Moving along! step 2</StepLabel>
-            <StepContent>
-              <Typography>Description</Typography>
-              <Box sx={{ mb: 2 }}>
-                <div>
-                  <Button
-                    disabled
-                    variant="contained"
-                    onClick={() => setActiveStep(1)}
+                    onClick={() => setActiveStep(step => step + 1)}
                     sx={{ mt: 1, mr: 1 }}
                   >
                     Continue
                   </Button>
                   <Button
-                    onClick={() => setActiveStep(0)}
+                    disabled={index === 0}
+                    onClick={() => setActiveStep(step => step - 1)}
                     sx={{ mt: 1, mr: 1 }}
                   >
                     Back
@@ -85,10 +52,62 @@ function App() {
               </Box>
             </StepContent>
           </Step>
-        </Stepper>
+        );
+      })}
+    </Stepper>
+  );
+};
+
+const App = () => {
+  return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="App">
+        <CustomStepper
+          steps={[
+            {
+              title: 'Getting Started',
+              content: (
+                <>
+                  <Typography>
+                    Click the &nbsp;
+                    <ExtensionIcon
+                      fontSize="small"
+                      style={{ verticalAlign: 'top' }}
+                    />
+                    &nbsp; located in the top right corner of your browser.
+                  </Typography>
+                  <Typography>
+                    Then click the &nbsp;
+                    <PushPinIcon
+                      fontSize="small"
+                      style={{ verticalAlign: 'top' }}
+                    />
+                    &nbsp; next to Birdwatcher.
+                  </Typography>
+                </>
+              ),
+            },
+            {
+              title: 'Viewing Birds',
+              content: (
+                <>
+                  <Typography>
+                    Click the new &nbsp;
+                    <img src="images/icon.png" alt="bird" />
+                    &nbsp; in the top right corner of your browser.
+                  </Typography>
+                  <Typography>
+                    Here you can view info about the birds on your screen!
+                  </Typography>
+                </>
+              ),
+            },
+          ]}
+        />
       </div>
     </ThemeProvider>
   );
-}
+};
 
 export default App;
