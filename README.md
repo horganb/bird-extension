@@ -5,5 +5,3 @@ To build for development:
 To build for production:
 
 `npm run build`
-
-Testing
