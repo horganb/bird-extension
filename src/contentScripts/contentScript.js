@@ -25,6 +25,12 @@ const spawn = type => {
 };
 
 const mainLoop = () => {
+  if (chrome.runtime.id === undefined) {
+    // if the extension was deactivated, remove birds.
+    stopBirds();
+    return;
+  }
+
   const fullscreen = window.innerHeight === screen.height;
   if (fullscreen) {
     // pause in fullscreen
@@ -38,9 +44,11 @@ const mainLoop = () => {
   ) {
     spawn(randomBirdType());
   }
+
   activeBirds.forEach(bird => {
     bird.update();
   });
+
   activeBirds = activeBirds.filter(bird => !toRemove.includes(bird));
   // remove birds that exceed the maxBirds setting
   for (let i = activeBirds.length - 1; i >= gameOptions.maxBirds; i--) {

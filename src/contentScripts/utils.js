@@ -1,12 +1,4 @@
-import { stopBirds } from './contentScript';
-
-export const localURL = url => {
-  if (chrome.runtime.id == undefined) {
-    stopBirds();
-  } else {
-    return chrome.runtime.getURL(url);
-  }
-};
+export const localURL = url => chrome.runtime.getURL(url);
 
 export const getPlatforms = (el = document.documentElement) => {
   const platforms = [];
