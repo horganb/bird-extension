@@ -1,8 +1,18 @@
+## 1.0.3 (1/2/2022)
+
+### Added
+
+- Added help site that opens after installation
+
+### Changed
+
+- Birds can now land on black text
+
 ## 1.0.2 (1/1/2022)
 
 ### Added
 
-- Added Release Dove and Rainbow Lorikeet
+- Added birds: Release Dove and Rainbow Lorikeet
 
 ## 1.0.1 (1/1/2022)
 

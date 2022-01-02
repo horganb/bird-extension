@@ -1,3 +1,0 @@
-web: cd site
-web: npm i -g serve
-web: serve -s build
