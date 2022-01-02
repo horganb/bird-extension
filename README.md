@@ -1,7 +1,7 @@
 To build for development:
 
-npm run dev
+`npm run dev`
 
 To build for production:
 
-npm run build
+`npm run build`
