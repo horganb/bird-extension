@@ -1,2 +1,3 @@
 npm run build
-tar -cvf bird-extension.zip manifest.json build images fonts sounds popup.html
+rm bird-extension.zip
+zip bird-extension.zip manifest.json popup.html -r build images fonts sounds
