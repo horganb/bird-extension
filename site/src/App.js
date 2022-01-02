@@ -8,6 +8,8 @@ import {
 } from '@mui/material';
 import ExtensionIcon from '@mui/icons-material/Extension';
 import PushPinIcon from '@mui/icons-material/PushPin';
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import { Box } from '@mui/system';
@@ -101,6 +103,19 @@ const App = () => {
                   </Typography>
                   <Typography>
                     Here you can view info about the birds on your screen!
+                  </Typography>
+                  <Typography>
+                    Cycle through them with &nbsp;
+                    <ChevronLeftIcon
+                      fontSize="small"
+                      style={{ verticalAlign: 'top' }}
+                    />
+                    &nbsp; and &nbsp;
+                    <ChevronRightIcon
+                      fontSize="small"
+                      style={{ verticalAlign: 'top' }}
+                    />
+                    &nbsp;
                   </Typography>
                 </>
               ),
