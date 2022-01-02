@@ -4,7 +4,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import { BirdInspectorContainer, CenteredFlexColumn } from './styles';
 import { defaultSettings } from '../defaultSettings';
-import { getDomain } from '../utils';
+import { getDomain, unavailableURLs } from '../utils';
 
 const BirdPage = () => {
   const [birdImageURL, setBirdImageURL] = useState();
@@ -14,7 +14,7 @@ const BirdPage = () => {
   const [birdIndex, setBirdIndex] = useState(0);
   const [numBirds, setNumBirds] = useState(0);
   const [settings, setSettings] = useState(defaultSettings);
-  const [currentDomain, setCurrentDomain] = useState();
+  const [currentURL, setCurrentURL] = useState();
 
   const birdInspectorPort = useRef();
 
@@ -39,7 +39,7 @@ const BirdPage = () => {
       setSettings(settingValues);
     });
     chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
-      setCurrentDomain(getDomain(tabs[0].url));
+      setCurrentURL(tabs[0].url);
     });
   }, []);
 
@@ -51,15 +51,30 @@ const BirdPage = () => {
     birdInspectorPort.current?.postMessage({ right: true });
   };
 
-  const disabledOnThisSite = settings.blockedSites.includes(currentDomain);
+  const unavailableOnThisSite =
+    currentURL && unavailableURLs.some(url => currentURL.startsWith(url));
+  const disabledOnThisSite =
+    currentURL && settings.blockedSites.includes(getDomain(currentURL));
   const disabled = disabledOnThisSite || !settings.enabled;
 
-  return disabled ? (
+  return unavailableOnThisSite ? (
     <p
       style={{
-        opacity: 0.8,
+        opacity: 0.6,
         fontStyle: 'italic',
         textAlign: 'center',
+        color: 'red',
+      }}
+    >
+      Sorry, this page is a no bird zone! Try a different site.
+    </p>
+  ) : disabled ? (
+    <p
+      style={{
+        opacity: 0.6,
+        fontStyle: 'italic',
+        textAlign: 'center',
+        color: 'red',
       }}
     >
       Birds are disabled! To change this, click "Settings."
