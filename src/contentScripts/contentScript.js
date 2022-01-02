@@ -63,7 +63,7 @@ const removeBirds = () => {
   activeBirds = [];
 };
 
-const stopBirds = () => {
+export const stopBirds = () => {
   removeBirds();
   clearInterval(gameInterval);
 };

@@ -1,5 +1,11 @@
+import { stopBirds } from './contentScript';
+
 export const localURL = url => {
-  return chrome.runtime.getURL(url);
+  if (chrome.runtime.id == undefined) {
+    stopBirds();
+  } else {
+    return chrome.runtime.getURL(url);
+  }
 };
 
 export const getPlatforms = (el = document.documentElement) => {
