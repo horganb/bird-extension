@@ -1,3 +1,17 @@
+## 1.0.4 ???
+
+### Added
+
+- Added bird: American Goldfinch
+
+### Changed
+
+- Style adjustments in popup
+
+### Fixed
+
+- Fixed bug causing strange behavior and crashing when uninstalling or reloading the extension
+
 ## 1.0.3 (1/2/2022)
 
 ### Added
