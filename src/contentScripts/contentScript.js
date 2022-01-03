@@ -40,7 +40,7 @@ const mainLoop = () => {
 
   if (
     activeBirds.length < gameOptions.maxBirds &&
-    Math.random() < 0.5 * ACTION_FACTOR
+    Math.random() < 0.55 * ACTION_FACTOR
   ) {
     spawn(randomBirdType());
   }
@@ -62,6 +62,12 @@ let gameInterval;
 
 const startBirds = () => {
   gameInterval = setInterval(mainLoop, LOOP_SPEED);
+  setTimeout(() => {
+    // spawn bird after some time if none have spawned yet
+    if (activeBirds.length === 0) {
+      spawn(randomBirdType());
+    }
+  }, 1500);
 };
 
 const removeBirds = () => {
