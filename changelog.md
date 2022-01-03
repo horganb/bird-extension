@@ -2,7 +2,7 @@
 
 ### Added
 
-- Added bird: American Goldfinch
+- Added birds: American Goldfinch, Mourning Dove, Black-billed Magpie
 
 ### Changed
 

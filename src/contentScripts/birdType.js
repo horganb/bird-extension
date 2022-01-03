@@ -39,7 +39,7 @@ const birdTypes = [
     name: 'Northern Cardinal',
     species: 'Cardinalis cardinalis',
     imagePath: 'cardinal',
-    speed: 0.4,
+    speed: 0.3,
     rarity: 2,
     wingspan: [25, 31],
     mass: [33.6, 65],
@@ -88,6 +88,24 @@ const birdTypes = [
     rarity: 2,
     wingspan: [19, 22],
     mass: [11, 20],
+  },
+  {
+    name: 'Mourning Dove',
+    species: 'Zenaida macroura',
+    imagePath: 'mourningDove',
+    speed: 0.4,
+    rarity: 1,
+    wingspan: [37, 45],
+    mass: [112, 170],
+  },
+  {
+    name: 'Black-billed Magpie',
+    species: 'Pica hudsonia',
+    imagePath: 'blackbilledMagpie',
+    speed: 0.3,
+    rarity: 2,
+    wingspan: [20.5, 21.9],
+    mass: [167, 216],
   },
 ];
 

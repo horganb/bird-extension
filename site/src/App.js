@@ -72,25 +72,25 @@ const App = () => {
       content: (
         <>
           <Typography>
-            Click the new &nbsp;
+            Click the new&nbsp;
             <img src="images/icon.png" alt="bird" />
-            &nbsp; in the top right corner of your browser.
+            &nbsp;in the top right corner of your browser.
           </Typography>
           <Typography>
             Here you can view info about the birds on your screen!
           </Typography>
           <Typography>
-            Cycle through them with &nbsp;
+            Cycle through them with the&nbsp;
             <ChevronLeftIcon
               fontSize="small"
               style={{ verticalAlign: 'top' }}
             />
-            &nbsp; and &nbsp;
+            &nbsp;and&nbsp;
             <ChevronRightIcon
               fontSize="small"
               style={{ verticalAlign: 'top' }}
             />
-            &nbsp;
+            &nbsp;arrows.
           </Typography>
         </>
       ),
@@ -103,17 +103,17 @@ const App = () => {
       content: (
         <>
           <Typography>
-            Click the &nbsp;
+            Click the&nbsp;
             <ExtensionIcon fontSize="small" style={{ verticalAlign: 'top' }} />
-            &nbsp; located in the top right corner of your browser.
+            &nbsp;located in the top right corner of your browser.
           </Typography>
           <Typography>
-            Then click the &nbsp;
+            Then click the&nbsp;
             <PushPinOutlinedIcon
               fontSize="small"
               style={{ verticalAlign: 'top' }}
             />
-            &nbsp; next to Birdwatcher.
+            &nbsp;next to Birdwatcher.
           </Typography>
         </>
       ),
