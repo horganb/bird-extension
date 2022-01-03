@@ -80,6 +80,15 @@ const birdTypes = [
     wingspan: [25, 30],
     mass: [75, 157],
   },
+  {
+    name: 'American Goldfinch',
+    species: 'Spinus tristis',
+    imagePath: 'goldfinch',
+    speed: 0.25,
+    rarity: 2,
+    wingspan: [19, 22],
+    mass: [11, 20],
+  },
 ];
 
 export let rarityTotal = 0;
