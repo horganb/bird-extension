@@ -6,9 +6,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import SettingsIcon from '@mui/icons-material/Settings';
 import SettingsPage from './SettingsPage';
 import BirdPage from './BirdPage';
 import { PopupContainer, TabPanelContainer, theme } from './styles';
+import { localURL } from '../contentScripts/utils';
 
 const Popup = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -25,8 +27,16 @@ const Popup = () => {
             textColor="inherit"
             variant="fullWidth"
           >
-            <Tab label="Inspector" />
-            <Tab label="Settings" />
+            <Tab
+              label={
+                <img
+                  src={localURL('images/binoculars.png')}
+                  style={{ height: '32px' }}
+                />
+              }
+              style={{ padding: 0 }}
+            />
+            <Tab label={<SettingsIcon />} style={{ padding: 0 }} />
           </Tabs>
         </AppBar>
         <SwipeableViews
