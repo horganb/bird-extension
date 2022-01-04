@@ -129,7 +129,7 @@ const App = () => {
           <Typography
             variant="h3"
             style={{ display: 'inline' }}
-            color="primary"
+            color="secondary"
           >
             Birdwatcher
           </Typography>
