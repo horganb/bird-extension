@@ -25,6 +25,17 @@ export class Dot {
     throw new AbstractMethodError();
   }
 
+  /** Get the Y position relative to the window viewport. */
+  getYRelativeToWindow() {
+    throw new AbstractMethodError();
+  }
+
+  /** Whether a bird can be at this Dot while being entirely visible. */
+  isVisibleWithBird(bird) {
+    const fitsBird = this.getYRelativeToWindow() - bird.getHeight() >= 0;
+    return this.isVisible() && fitsBird;
+  }
+
   /** Convert to a point. */
   toPoint() {
     return new Point(this.x, this.y);
@@ -55,6 +66,10 @@ export class Point extends Dot {
   }
 
   get y() {
+    return this.y;
+  }
+
+  getYRelativeToWindow() {
     return this.y;
   }
 
@@ -125,6 +140,10 @@ export class Platform {
     }
   }
 
+  isVisibleWithBird(bird) {
+    return new PlatformLocation(this, 0).isVisibleWithBird(bird);
+  }
+
   static getVisiblePlatforms(el = document.documentElement) {
     const platforms = [];
 
@@ -168,6 +187,10 @@ export class PlatformLocation extends Dot {
 
   get y() {
     return this.platform.position.y;
+  }
+
+  getYRelativeToWindow() {
+    return this.platform.clientRect.top;
   }
 
   /** Whether this is a location on a visible platform. */

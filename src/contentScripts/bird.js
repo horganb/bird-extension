@@ -99,7 +99,7 @@ export default class Bird {
     this.incrementTimers();
     if (this.action === ActionTypes.FLYING) {
       if (
-        !this.destination.isVisible() &&
+        !this.destination.isVisibleWithBird(this) &&
         this.subAction !== ActionTypes.FLYING_OFFSCREEN
       ) {
         this.flyToRandomPlatform();
@@ -115,7 +115,7 @@ export default class Bird {
       }
     } else if (this.action === ActionTypes.IDLE) {
       if (
-        !this.location.isVisible() ||
+        !this.location.isVisibleWithBird(this) ||
         !this.location.equals(this.lastLocation, 0.01)
       ) {
         this.flyToRandomPlatform();
@@ -189,7 +189,9 @@ export default class Bird {
   }
 
   flyToRandomPlatform() {
-    const validPlatforms = Platform.getVisiblePlatforms();
+    const validPlatforms = Platform.getVisiblePlatforms().filter(pl =>
+      pl.isVisibleWithBird(this)
+    );
     const targetPlatform =
       validPlatforms[Math.floor(Math.random() * validPlatforms.length)];
     if (!targetPlatform) {
