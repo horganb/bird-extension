@@ -11,7 +11,7 @@ const birdTypes = [
   {
     name: 'Baltimore Oriole',
     species: 'Icterus galbula',
-    imagePath: 'oriole',
+    imagePath: 'baltimoreOriole',
     speed: 0.3,
     rarity: 2,
     wingspan: [23, 32],
@@ -20,7 +20,7 @@ const birdTypes = [
   {
     name: 'American Crow',
     species: 'Corvus brachyrhynchos',
-    imagePath: 'crow',
+    imagePath: 'americanCrow',
     speed: 0.25,
     rarity: 1,
     wingspan: [85, 100],
@@ -38,7 +38,7 @@ const birdTypes = [
   {
     name: 'Northern Cardinal',
     species: 'Cardinalis cardinalis',
-    imagePath: 'cardinal',
+    imagePath: 'northernCardinal',
     speed: 0.3,
     rarity: 2,
     wingspan: [25, 31],
@@ -65,7 +65,7 @@ const birdTypes = [
   {
     name: 'Release Dove',
     species: 'Columba livia domestica',
-    imagePath: 'dove',
+    imagePath: 'releaseDove',
     speed: 0.25,
     rarity: 2,
     wingspan: [62, 72],
@@ -83,7 +83,7 @@ const birdTypes = [
   {
     name: 'American Goldfinch',
     species: 'Spinus tristis',
-    imagePath: 'goldfinch',
+    imagePath: 'americanGoldfinch',
     speed: 0.25,
     rarity: 2,
     wingspan: [19, 22],
@@ -110,7 +110,7 @@ const birdTypes = [
   {
     name: 'Bee Hummingbird',
     species: 'Mellisuga helenae',
-    imagePath: 'beeHummingBird',
+    imagePath: 'beeHummingbird',
     speed: 0.3,
     rarity: 3,
     wingspan: 3.25,
