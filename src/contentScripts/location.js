@@ -190,7 +190,11 @@ export class PlatformLocation extends Dot {
   }
 
   getYRelativeToWindow() {
-    return this.platform.clientRect.top;
+    try {
+      return this.platform.clientRect.top;
+    } catch {
+      return 0;
+    }
   }
 
   /** Whether this is a location on a visible platform. */
