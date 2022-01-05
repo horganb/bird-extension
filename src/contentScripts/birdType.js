@@ -107,6 +107,15 @@ const birdTypes = [
     wingspan: [20.5, 21.9],
     mass: [167, 216],
   },
+  {
+    name: 'Bee Hummingbird',
+    species: 'Mellisuga helenae',
+    imagePath: 'beeHummingBird',
+    speed: 0.3,
+    rarity: 3,
+    wingspan: 3.25,
+    mass: 1.95,
+  },
 ];
 
 export let rarityTotal = 0;
