@@ -16,7 +16,7 @@ import { Box } from '@mui/system';
 import React, { useState } from 'react';
 
 import './App.css';
-import { theme } from './styles';
+import { AppContainer, InfoContainer, theme } from './styles';
 import { isEdgeBrowser } from './utils';
 
 const CustomStepper = ({ steps }) => {
@@ -30,7 +30,9 @@ const CustomStepper = ({ steps }) => {
         return (
           <Step key={index} expanded completed={false}>
             <StepLabel>
-              <Typography variant="h5">{title}</Typography>
+              <Typography variant="h5" style={{ fontWeight: '600' }}>
+                {title}
+              </Typography>
             </StepLabel>
             <StepContent>
               {content}
@@ -46,14 +48,6 @@ const CustomStepper = ({ steps }) => {
                         Continue
                       </Button>
                     )}
-                    <Button
-                      disabled={index === 0}
-                      variant="outlined"
-                      onClick={() => setActiveStep(step => step - 1)}
-                      sx={{ mt: 1, mr: 1 }}
-                    >
-                      Back
-                    </Button>
                   </div>
                 </Box>
               )}
@@ -123,20 +117,22 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <div className="App">
-        <Typography variant="h3" style={{ margin: '4rem' }}>
-          Welcome to{' '}
+      <AppContainer>
+        <InfoContainer>
           <Typography
             variant="h3"
-            style={{ display: 'inline' }}
-            color="secondary"
+            style={{ fontWeight: '700', marginBottom: '-10px' }}
           >
-            Birdwatcher
+            Welcome to
           </Typography>
-          !
-        </Typography>
-        <CustomStepper steps={steps} />
-      </div>
+          <img
+            src="images/title.png"
+            style={{ paddingBottom: '1rem', width: '28rem' }}
+            alt="Birdwatcher"
+          />
+          <CustomStepper steps={steps} />
+        </InfoContainer>
+      </AppContainer>
     </ThemeProvider>
   );
 };
