@@ -1,5 +1,9 @@
 ## 1.0.5 ???
 
+### Added
+
+- Added bird: Bee Hummingbird
+
 ### Changed
 
 - Style adjustments in popup
@@ -8,6 +12,7 @@
 ### Fixed
 
 - Fixed birds landing on text that would cause them to appear cut off
+- Fixed birds speeding up when disabling extension
 
 ## 1.0.4 (1/3/2022)
 
