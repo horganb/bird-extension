@@ -21,12 +21,6 @@ export const theme = createTheme({
           ) format("truetype");
         }
         @font-face {
-          font-family: "Poppins";
-          src: url(
-            'fonts/Poppins/Poppins-Regular.ttf'
-          ) format("truetype");
-        }
-        @font-face {
           font-family: "Quicksand";
           src: url(
             'fonts/Quicksand/static/Quicksand-Regular.ttf'

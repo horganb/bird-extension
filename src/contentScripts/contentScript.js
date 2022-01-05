@@ -91,7 +91,7 @@ const enabledOnThisSite = options => {
 };
 
 chrome.runtime.onMessage.addListener(settings => {
-  if (settings.enabled !== undefined) {
+  if (settings.enabled !== undefined && enabledOnThisSite(gameOptions)) {
     if (settings.enabled && !gameOptions.enabled) {
       startBirds();
     } else if (!settings.enabled && gameOptions.enabled) {
@@ -99,7 +99,7 @@ chrome.runtime.onMessage.addListener(settings => {
     }
   }
 
-  if (settings.blockedSites !== undefined) {
+  if (settings.blockedSites !== undefined && gameOptions.enabled) {
     if (enabledOnThisSite(settings) && !enabledOnThisSite(gameOptions)) {
       startBirds();
     } else if (!enabledOnThisSite(settings) && enabledOnThisSite(gameOptions)) {

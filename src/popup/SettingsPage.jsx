@@ -6,7 +6,11 @@ import Typography from '@mui/material/Typography';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
 import { defaultSettings } from '../defaultSettings';
-import { CenteredFlexColumn, CheckboxContainer } from './styles';
+import {
+  CenteredFlexColumn,
+  CheckboxContainer,
+  WideToggleButton,
+} from './styles';
 import { getDomain } from '../utils';
 
 const SettingsPage = () => {
@@ -79,14 +83,15 @@ const SettingsPage = () => {
           value={disabledSettings}
           onChange={handleDisableChange}
           size="small"
+          style={{ marginBottom: '0.5rem' }}
         >
-          <ToggleButton
+          <WideToggleButton
             color="warning"
             value="thisSite"
             disabled={!settings.enabled}
           >
             This site
-          </ToggleButton>
+          </WideToggleButton>
           <ToggleButton color="error" value="allSites">
             All sites
           </ToggleButton>
@@ -98,7 +103,7 @@ const SettingsPage = () => {
         'Birds Fly From Cursor',
         "Birds Don't Fly From Cursor"
       )}
-      <CenteredFlexColumn style={{ width: '100%' }}>
+      <CenteredFlexColumn style={{ width: '100%', marginTop: '0.5rem' }}>
         <Typography>Bird Limit</Typography>
         <Slider
           value={settings.maxBirds}

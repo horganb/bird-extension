@@ -1,6 +1,7 @@
 import { localURL } from '../contentScripts/utils';
 import { createTheme, styled } from '@mui/material/styles';
 import { cyan, pink } from '@mui/material/colors';
+import { ToggleButton } from '@mui/material';
 
 export const theme = createTheme({
   palette: {
@@ -8,7 +9,10 @@ export const theme = createTheme({
     secondary: pink,
   },
   typography: {
-    fontFamily: ['Domine'],
+    fontFamily: ['Quicksand'],
+    body1: {
+      fontWeight: 500,
+    },
   },
   components: {
     MuiCssBaseline: {
@@ -19,6 +23,12 @@ export const theme = createTheme({
             'fonts/Domine/Domine-VariableFont_wght.ttf'
           )}) format("truetype");
         }
+        @font-face {
+          font-family: "Quicksand";
+          src: url(
+            'fonts/Quicksand/static/Quicksand-Regular.ttf'
+          ) format("truetype");
+        }
       `,
     },
   },
@@ -28,7 +38,6 @@ export const PopupContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   alignItems: 'center',
-  border: `4px ridge ${theme.palette.primary.light}`,
   backgroundColor: '#f0fdff',
   width: '300px',
 }));
@@ -36,6 +45,7 @@ export const PopupContainer = styled('div')(({ theme }) => ({
 export const BirdInspectorContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
+  fontFamily: 'Domine',
 }));
 
 export const CenteredFlexColumn = styled('div')(({ theme }) => ({
@@ -53,4 +63,8 @@ export const CheckboxContainer = styled('div')(({ theme }) => ({
 
 export const TabPanelContainer = styled('div')(({ theme }) => ({
   padding: '0.5rem',
+}));
+
+export const WideToggleButton = styled(ToggleButton)(() => ({
+  padding: '0 11px',
 }));
