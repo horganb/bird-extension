@@ -1,3 +1,14 @@
+## 1.0.5 ???
+
+### Changed
+
+- Style adjustments in popup
+- Increased frequency of bird spawns
+
+### Fixed
+
+- Fixed birds landing on text that would cause them to appear cut off
+
 ## 1.0.4 (1/3/2022)
 
 ### Added
