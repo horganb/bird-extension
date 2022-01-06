@@ -7,3 +7,13 @@ chrome.runtime.onInstalled.addListener(function (details) {
     // extension is updated
   }
 });
+
+chrome.runtime.onMessage.addListener(msg => {
+  if (msg.seen) {
+    chrome.tabs.query({}, tabs => {
+      tabs.forEach(tab => {
+        chrome.tabs.sendMessage(tab.id, msg);
+      });
+    });
+  }
+});

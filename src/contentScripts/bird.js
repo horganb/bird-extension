@@ -2,6 +2,7 @@ import { localURL } from './utils';
 import dom from './dom';
 import { gameOptions, LOOP_SPEED, queueRemoval } from './contentScript';
 import { Platform, PlatformLocation, Point } from './location';
+import { defaultSettings } from '../defaultSettings';
 
 const BIRD_SIZE = 16;
 export const ACTION_FACTOR = 0.002;
@@ -78,6 +79,15 @@ export default class Bird {
     this.destination = null;
     this.direction = null;
     this.actionTimers = [];
+    this.newBird = false;
+    this.newBirdIndicator = null;
+
+    // create new bird indicator if necessary
+    chrome.storage.local.get({ birdsSeen: {} }, ({ birdsSeen }) => {
+      if (!birdsSeen[this.type.imagePath]) {
+        this.markAsNew();
+      }
+    });
 
     window.addEventListener('mousemove', e => {
       mousePosition = new Point(e.pageX, e.pageY);
@@ -97,6 +107,9 @@ export default class Bird {
 
   update() {
     this.incrementTimers();
+    if (mousePosition && this.location.equals(mousePosition, 30)) {
+      this.markAsSeen();
+    }
     if (this.action === ActionTypes.FLYING) {
       if (
         !this.destination.isVisibleWithBird(this) &&
@@ -139,6 +152,7 @@ export default class Bird {
 
   remove() {
     this.element.remove();
+    this.newBirdIndicator?.remove();
     queueRemoval(this);
   }
 
@@ -156,6 +170,34 @@ export default class Bird {
   }
 
   // Private methods
+
+  markAsNew() {
+    this.newBird = true;
+    const newBirdIndicator = document.createElement('IMG');
+    newBirdIndicator.src = localURL('images/sparkles.gif');
+    newBirdIndicator.className = 'bird-ext-new-bird-indicator';
+    dom.appendChild(newBirdIndicator);
+    this.newBirdIndicator = newBirdIndicator;
+    chrome.runtime.onMessage.addListener(msg => {
+      if (msg.seen === this.type.imagePath) {
+        this.newBird = false;
+        this.newBirdIndicator?.remove();
+      }
+    });
+  }
+
+  markAsSeen() {
+    chrome.storage.local.get({ birdsSeen: {} }, ({ birdsSeen }) => {
+      chrome.storage.local.set(
+        { birdsSeen: { ...birdsSeen, [this.type.imagePath]: new Date() } },
+        () => {
+          this.newBird = false;
+          this.newBirdIndicator?.remove();
+          chrome.runtime.sendMessage({ seen: this.type.imagePath });
+        }
+      );
+    });
+  }
 
   /** Returns a random Point on the edge of the screen. */
   getEdgePoint() {
@@ -292,6 +334,13 @@ export default class Bird {
       Object.assign(elementStyle, {
         left: `${this.getBirdLeft()}px`,
         top: `${this.getBirdTop()}px`,
+      });
+    }
+    if (this.newBird) {
+      Object.assign(this.newBirdIndicator.style, {
+        left: `${this.getBirdLeft() - this.getWidth() / 2}px`,
+        top: `${this.getBirdTop() - this.getHeight() / 3}px`,
+        width: `${this.getWidth() * 2}px`,
       });
     }
   }

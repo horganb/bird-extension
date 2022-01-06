@@ -116,6 +116,15 @@ const birdTypes = [
     wingspan: 3.25,
     mass: 1.95,
   },
+  {
+    name: "Major Mitchell's Cockatoo",
+    species: 'Lophochroa leadbeateri',
+    imagePath: 'majorMitchellsCockatoo',
+    speed: 0.3,
+    rarity: 4,
+    wingspan: 81,
+    mass: [300, 450],
+  },
 ];
 
 export let rarityTotal = 0;

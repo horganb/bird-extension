@@ -5,6 +5,13 @@ img.bird-ext-bird {
   pointer-events: none; /* this is to exclude the bird from the call to document.elementFromPoint */
 }
 
+img.bird-ext-new-bird-indicator {
+  all: initial;
+  position: absolute;
+  z-index: 2147483647;
+  pointer-events: none; /* this is to exclude the bird from the call to document.elementFromPoint */
+}
+
 @keyframes arrowFlash {
   0% {
     color: rgb(255, 204, 204);
