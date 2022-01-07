@@ -129,7 +129,7 @@ const birdTypes = [
     name: "Anna's Hummingbird",
     species: 'Calypte anna',
     imagePath: 'annasHummingbird',
-    speed: 3.5,
+    speed: 0.35,
     rarity: 4,
     wingspan: 4.7,
     mass: [2.8, 5.7],
