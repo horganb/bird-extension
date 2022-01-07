@@ -95,8 +95,8 @@ export default class Bird {
 
     if (gameOptions.soundsEnabled) {
       const soundFile = this.type.sound || 'chirp.wav';
-      const chirpSound = new Audio(localURL(`sounds/${soundFile}`));
-      chirpSound.play();
+      const birdSound = new Audio(localURL(`sounds/${soundFile}`));
+      birdSound.play();
     }
 
     this.flyToRandomPlatform();
