@@ -125,6 +125,15 @@ const birdTypes = [
     wingspan: 81,
     mass: [300, 450],
   },
+  {
+    name: "Anna's Hummingbird",
+    species: 'Calypte anna',
+    imagePath: 'annasHummingbird',
+    speed: 3.5,
+    rarity: 4,
+    wingspan: 4.7,
+    mass: [2.8, 5.7],
+  },
 ];
 
 export let rarityTotal = 0;
