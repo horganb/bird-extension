@@ -104,6 +104,7 @@ const BirdPage = () => {
             transform: birdTransform,
             width: '40px',
             height: 'auto',
+            imageRendering: 'pixelated',
           }}
         />
       </CenteredFlexColumn>

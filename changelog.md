@@ -1,3 +1,9 @@
+## 1.0.6 (1/6/2022)
+
+### Fixed
+
+- Fixed blurry birds in inspector
+
 ## 1.0.5 (1/4/2022)
 
 ### Added
