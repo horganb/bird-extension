@@ -94,8 +94,9 @@ export default class Bird {
     });
 
     if (gameOptions.soundsEnabled) {
-      const chirpSound = new Audio(localURL('sounds/chirp.wav'));
-      chirpSound.play();
+      const soundFile = this.type.sound || 'chirp.wav';
+      const birdSound = new Audio(localURL(`sounds/${soundFile}`));
+      birdSound.play();
     }
 
     this.flyToRandomPlatform();
@@ -103,7 +104,7 @@ export default class Bird {
 
   // Public methods
 
-  getTimerEvents() {}
+  getTimerEvents() { }
 
   update() {
     this.incrementTimers();

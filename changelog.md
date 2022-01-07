@@ -1,5 +1,9 @@
 ## 1.0.6 (1/6/2022)
 
+### Added
+
+- Added birds: Major Mitchell's Cockatoo, Anna's Hummingbird
+
 ### Fixed
 
 - Fixed blurry birds in inspector
