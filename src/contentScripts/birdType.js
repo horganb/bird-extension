@@ -137,7 +137,7 @@ export const birdTypes = [
 ];
 
 const getRarity = (birdType, birdsSeen) => {
-  const SEEN_BIRD_RARITY_DECREASE = 3;
+  const SEEN_BIRD_RARITY_DECREASE = 5;
   let rarity = birdType.rarity;
   if (birdsSeen[birdType.imagePath]) {
     // if this bird has been seen before, significantly decrease its rarity
