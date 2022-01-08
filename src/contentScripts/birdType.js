@@ -136,18 +136,33 @@ export const birdTypes = [
   },
 ];
 
-export let rarityTotal = 0;
-for (const type of birdTypes) {
-  rarityTotal += 1 / type.rarity;
-}
+const getRarity = (birdType, birdsSeen) => {
+  const SEEN_BIRD_RARITY_DECREASE = 3;
+  let rarity = birdType.rarity;
+  if (birdsSeen[birdType.imagePath]) {
+    // if this bird has been seen before, significantly decrease its rarity
+    rarity /= SEEN_BIRD_RARITY_DECREASE;
+  }
+  return rarity;
+};
+
+const getRarityTotal = birdsSeen => {
+  let total = 0;
+  for (const type of birdTypes) {
+    total += 1 / getRarity(type, birdsSeen);
+  }
+  return total;
+};
 
 export const randomBirdType = () => {
-  const pick = Math.random() * rarityTotal;
-  let raritySum = 0;
-  for (const type of birdTypes) {
-    raritySum += 1 / type.rarity;
-    if (pick < raritySum) {
-      return type;
+  return chrome.storage.local.get({ birdsSeen: {} }).then(({ birdsSeen }) => {
+    const pick = Math.random() * getRarityTotal(birdsSeen);
+    let raritySum = 0;
+    for (const type of birdTypes) {
+      raritySum += 1 / getRarity(type, birdsSeen);
+      if (pick < raritySum) {
+        return type;
+      }
     }
-  }
+  });
 };

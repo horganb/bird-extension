@@ -20,9 +20,11 @@ export const queueRemoval = bird => {
   toRemove.push(bird);
 };
 
-const spawn = type => {
-  const newBird = new Bird(type);
-  activeBirds.push(newBird);
+const spawnRandomBird = () => {
+  randomBirdType().then(type => {
+    const newBird = new Bird(type);
+    activeBirds.push(newBird);
+  });
 };
 
 const mainLoop = () => {
@@ -43,7 +45,7 @@ const mainLoop = () => {
     activeBirds.length < gameOptions.maxBirds &&
     Math.random() < 0.55 * ACTION_FACTOR
   ) {
-    spawn(randomBirdType());
+    spawnRandomBird();
   }
 
   activeBirds.forEach(bird => {
@@ -66,7 +68,7 @@ const startBirds = () => {
   setTimeout(() => {
     // spawn bird after some time if none have spawned yet
     if (activeBirds.length === 0) {
-      spawn(randomBirdType());
+      spawnRandomBird();
     }
   }, 1500);
 };
@@ -111,12 +113,18 @@ chrome.runtime.onMessage.addListener(settings => {
   Object.assign(gameOptions, settings);
 });
 
-chrome.storage.local.get(null, settings => {
-  Object.assign(gameOptions, settings);
-  if (gameOptions.enabled && enabledOnThisSite(gameOptions)) {
-    startBirds();
+const docReadyInterval = setInterval(() => {
+  // wait for the document to be loaded, then start spawning
+  if (document.readyState === 'complete') {
+    clearInterval(docReadyInterval);
+    chrome.storage.local.get(null, settings => {
+      Object.assign(gameOptions, settings);
+      if (gameOptions.enabled && enabledOnThisSite(gameOptions)) {
+        startBirds();
+      }
+    });
   }
-});
+}, 10);
 
 const BirdIndicator = () => {
   const bird = useRef();
@@ -171,7 +179,7 @@ const BirdIndicator = () => {
         position: 'absolute',
         left: `${birdPos[0]}px`,
         top: `${birdPos[1]}px`,
-        transform: 'translateX(-50%) translateY(-75%)',
+        transform: 'translateX(-50%) translateY(-100%)',
         zIndex: 2147483647,
         pointerEvents: 'none',
         animationName: 'arrowFlash',
