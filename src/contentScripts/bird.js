@@ -2,7 +2,6 @@ import { localURL } from './utils';
 import dom from './dom';
 import { gameOptions, LOOP_SPEED, queueRemoval } from './contentScript';
 import { Platform, PlatformLocation, Point } from './location';
-import { defaultSettings } from '../defaultSettings';
 
 const BIRD_SIZE = 16;
 export const ACTION_FACTOR = 0.002;
@@ -53,8 +52,6 @@ const ActionTimers = {
 
 const getTimersForAction = action => ActionTimers[action] || [];
 
-let mousePosition;
-
 /** A single bird. */
 export default class Bird {
   /**
@@ -63,12 +60,17 @@ export default class Bird {
    * @param {Object} type Type of bird.
    */
   constructor(type) {
+    const birdContainer = document.createElement('DIV');
+    birdContainer.className = 'bird-ext-bird-container';
+    dom.appendChild(birdContainer);
+
     const birdElement = document.createElement('IMG');
-    birdElement.className = 'bird-ext-bird';
-    dom.appendChild(birdElement);
+    birdElement.className = 'bird-ext-bird-image';
+    birdContainer.appendChild(birdElement);
 
     this.type = type;
     this.element = birdElement;
+    this.containerElement = birdContainer;
     this.location = this.getEdgePoint();
     this.lastLocation = this.location.toPoint();
     this.xSpeed = type.speed * LOOP_SPEED;
@@ -90,7 +92,16 @@ export default class Bird {
     });
 
     window.addEventListener('mousemove', e => {
-      mousePosition = new Point(e.pageX, e.pageY);
+      const mousePosition = new Point(e.pageX, e.pageY);
+      if (this.location.equals(mousePosition, 30)) {
+        this.markAsSeen(); // mark bird as discovered
+        if (
+          gameOptions.flyFromCursor &&
+          [ActionTypes.EATING, ActionTypes.IDLE].includes(this.action)
+        ) {
+          this.flyToRandomPlatform(); // fly from cursor
+        }
+      }
     });
 
     if (gameOptions.soundsEnabled) {
@@ -104,13 +115,8 @@ export default class Bird {
 
   // Public methods
 
-  getTimerEvents() { }
-
   update() {
     this.incrementTimers();
-    if (mousePosition && this.location.equals(mousePosition, 30)) {
-      this.markAsSeen();
-    }
     if (this.action === ActionTypes.FLYING) {
       if (
         !this.destination.isVisibleWithBird(this) &&
@@ -135,13 +141,6 @@ export default class Bird {
         this.flyToRandomPlatform();
       } else {
         this.lastLocation = this.location.toPoint();
-        if (
-          gameOptions.flyFromCursor &&
-          mousePosition &&
-          this.location.equals(mousePosition, 30)
-        ) {
-          this.flyToRandomPlatform();
-        }
       }
     }
     this.updateStyles();
@@ -152,7 +151,7 @@ export default class Bird {
   }
 
   remove() {
-    this.element.remove();
+    this.containerElement.remove();
     this.newBirdIndicator?.remove();
     queueRemoval(this);
   }
@@ -172,12 +171,38 @@ export default class Bird {
 
   // Private methods
 
+  showNewBirdMessage() {
+    const newBirdMessage = document.createElement('p');
+    newBirdMessage.innerHTML = 'New Bird Discovered!';
+    newBirdMessage.className = 'bird-ext-page-text';
+
+    const animationLength = 2000;
+
+    // animation
+    Object.assign(newBirdMessage.style, {
+      transition: `transform ${animationLength}ms ease-in, opacity ${animationLength}ms ease-in`,
+      transform: 'translate(-50%, -100%)',
+      opacity: 1,
+    });
+    setTimeout(() => {
+      Object.assign(newBirdMessage.style, {
+        transform: 'translate(-50%, -300%)',
+        opacity: 0,
+      });
+    }, 10);
+    setTimeout(() => {
+      newBirdMessage.remove();
+    }, animationLength);
+
+    this.containerElement.appendChild(newBirdMessage);
+  }
+
   markAsNew() {
     this.newBird = true;
     const newBirdIndicator = document.createElement('IMG');
     newBirdIndicator.src = localURL('images/sparkles.gif');
-    newBirdIndicator.className = 'bird-ext-new-bird-indicator';
-    dom.appendChild(newBirdIndicator);
+    newBirdIndicator.className = 'bird-ext-bird-indicator';
+    this.containerElement.appendChild(newBirdIndicator);
     this.newBirdIndicator = newBirdIndicator;
     chrome.runtime.onMessage.addListener(msg => {
       if (msg.seen === this.type.imagePath) {
@@ -188,16 +213,19 @@ export default class Bird {
   }
 
   markAsSeen() {
-    chrome.storage.local.get({ birdsSeen: {} }, ({ birdsSeen }) => {
-      chrome.storage.local.set(
-        { birdsSeen: { ...birdsSeen, [this.type.imagePath]: new Date() } },
-        () => {
-          this.newBird = false;
-          this.newBirdIndicator?.remove();
-          chrome.runtime.sendMessage({ seen: this.type.imagePath });
-        }
-      );
-    });
+    if (this.newBird) {
+      this.newBird = false;
+      chrome.storage.local.get({ birdsSeen: {} }, ({ birdsSeen }) => {
+        chrome.storage.local.set(
+          { birdsSeen: { ...birdsSeen, [this.type.imagePath]: new Date() } },
+          () => {
+            this.newBirdIndicator?.remove();
+            this.showNewBirdMessage();
+            chrome.runtime.sendMessage({ seen: this.type.imagePath });
+          }
+        );
+      });
+    }
   }
 
   /** Returns a random Point on the edge of the screen. */
@@ -319,28 +347,25 @@ export default class Bird {
   }
 
   getBirdLeft() {
-    return this.location.x - this.element.clientWidth / 2;
+    return this.location.x - this.containerElement.clientWidth / 2;
   }
 
   getBirdTop() {
-    return this.location.y - this.element.clientHeight;
+    return this.location.y - this.containerElement.clientHeight;
   }
 
   updateStyles() {
-    const elementStyle = this.element.style;
-    Object.assign(elementStyle, {
+    Object.assign(this.element.style, {
       transform: this.getTransform(),
     });
     if (this.action === ActionTypes.FLYING) {
-      Object.assign(elementStyle, {
+      Object.assign(this.containerElement.style, {
         left: `${this.getBirdLeft()}px`,
         top: `${this.getBirdTop()}px`,
       });
     }
     if (this.newBird) {
       Object.assign(this.newBirdIndicator.style, {
-        left: `${this.getBirdLeft() - this.getWidth() / 2}px`,
-        top: `${this.getBirdTop() - this.getHeight() / 3}px`,
         width: `${this.getWidth() * 2}px`,
       });
     }

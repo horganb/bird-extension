@@ -30,7 +30,7 @@
   },
   "web_accessible_resources": [
     {
-      "resources": ["*.png", "*.gif", "*.wav"],
+      "resources": ["*.png", "*.gif", "*.wav", "*.ttf"],
       "matches": ["<all_urls>"]
     }
   ]

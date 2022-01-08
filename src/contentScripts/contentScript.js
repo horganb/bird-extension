@@ -184,3 +184,16 @@ const BirdIndicator = () => {
 };
 
 ReactDOM.render(<BirdIndicator activeBirds={activeBirds} />, birdContainer);
+
+// Load font
+
+const font = new FontFace(
+  'Quicksand',
+  `url(${localURL(
+    'fonts/Quicksand/static/Quicksand-Regular.ttf'
+  )}) format("truetype")`
+);
+
+font.load().then(loaded => {
+  document.fonts.add(loaded);
+});
