@@ -15,5 +15,7 @@ chrome.runtime.onMessage.addListener(msg => {
         chrome.tabs.sendMessage(tab.id, msg);
       });
     });
+    chrome.action.setBadgeBackgroundColor({ color: '#00bcd4' });
+    chrome.action.setBadgeText({ text: '!' });
   }
 });
