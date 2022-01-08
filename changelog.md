@@ -1,12 +1,20 @@
-## 1.0.6 (1/6/2022)
+## 1.1.0 (1/8/2022)
 
 ### Added
 
+- Added Bird Log tab where users can view all birds they have discovered
+  - Indicator added to new birds, marked as discovered on hover
+  - Notification symbol added to extension icon after a bird is discovered
 - Added birds: Major Mitchell's Cockatoo, Anna's Hummingbird
 
 ### Fixed
 
 - Fixed blurry birds in inspector
+
+### Changed
+
+- Birds don't spawn until page has fully loaded
+- Abstracted the bird sounds
 
 ## 1.0.5 (1/4/2022)
 
