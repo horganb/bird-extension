@@ -59,8 +59,7 @@ export const AllBirdsContainer = styled('div')(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(5, 1fr)',
   alignItems: 'center',
-  padding: '9px',
-  // gap: '12px',
+  padding: '10px 20px',
 }));
 
 export const CenteredFlexColumn = styled('div')(({ theme }) => ({
@@ -69,10 +68,16 @@ export const CenteredFlexColumn = styled('div')(({ theme }) => ({
   alignItems: 'center',
 }));
 
-export const BirdInfoContainer = styled(CenteredFlexColumn)(({ toShow }) => ({
-  maxHeight: toShow ? '10rem' : '0',
-  transition: 'max-height 0.3s',
-  overflow: 'hidden',
+export const BirdInfoResizeContainer = styled(CenteredFlexColumn)(
+  ({ toShow }) => ({
+    maxHeight: toShow ? '10rem' : '0',
+    transition: 'max-height 0.3s',
+    overflow: 'hidden',
+  })
+);
+
+export const BirdInfoContainer = styled(CenteredFlexColumn)(() => ({
+  padding: '10px',
 }));
 
 export const CheckboxContainer = styled('div')(({ theme }) => ({
