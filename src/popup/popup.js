@@ -11,6 +11,7 @@ import SettingsPage from './SettingsPage';
 import BirdPage from './BirdPage';
 import { PopupContainer, TabPanelContainer, theme } from './styles';
 import { localURL } from '../contentScripts/utils';
+import EncyclopediaPage from './EncyclopediaPage';
 
 const Popup = () => {
   const [currentTab, setCurrentTab] = useState(0);
@@ -36,6 +37,15 @@ const Popup = () => {
               }
               style={{ padding: 0 }}
             />
+            <Tab
+              label={
+                <img
+                  src={localURL('images/bird.png')}
+                  style={{ height: '32px' }}
+                />
+              }
+              style={{ padding: 0 }}
+            />
             <Tab label={<SettingsIcon />} style={{ padding: 0 }} />
           </Tabs>
         </AppBar>
@@ -52,6 +62,9 @@ const Popup = () => {
             <BirdPage />
           </TabPanel>
           <TabPanel value={currentTab} index={1}>
+            <EncyclopediaPage />
+          </TabPanel>
+          <TabPanel value={currentTab} index={2}>
             <SettingsPage />
           </TabPanel>
         </SwipeableViews>

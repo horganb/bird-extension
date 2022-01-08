@@ -1,4 +1,4 @@
-const birdTypes = [
+export const birdTypes = [
   {
     name: 'Blue Jay',
     species: 'Cyanocitta cristata',
