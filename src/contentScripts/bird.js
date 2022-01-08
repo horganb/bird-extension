@@ -364,10 +364,5 @@ export default class Bird {
         top: `${this.getBirdTop()}px`,
       });
     }
-    if (this.newBird) {
-      Object.assign(this.newBirdIndicator.style, {
-        width: `${this.getWidth() * 2}px`,
-      });
-    }
   }
 }

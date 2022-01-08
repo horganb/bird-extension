@@ -11,6 +11,7 @@ div.bird-ext-bird-container {
 }
 
 img.bird-ext-bird-indicator {
+  width: 32px;
   position: absolute;
   left: 50%;
   top: 50%;
