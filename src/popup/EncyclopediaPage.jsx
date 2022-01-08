@@ -29,6 +29,9 @@ const EncyclopediaPage = () => {
         }
       });
     });
+    chrome.action.setBadgeText({
+      text: '',
+    });
   }, []);
 
   const compareBirds = (birdA, birdB) => birdA.rarity - birdB.rarity;
