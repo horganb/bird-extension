@@ -1,13 +1,4 @@
 {
-  "emeraldwalk.runonsave": {
-    "commands": [
-      {
-        "match": ".*",
-        "isAsync": true,
-        "cmd": "npm run dev && start chrome http://reload.extensions"
-      }
-    ]
-  },
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.formatOnSave": true
 }
