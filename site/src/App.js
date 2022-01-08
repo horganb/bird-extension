@@ -74,17 +74,17 @@ const App = () => {
             src="images/binoculars.png"
             alt="binoculars"
             width="20px"
-            style={{ verticalAlign: 'top' }}
+            style={{ verticalAlign: 'sub' }}
           />
           .
           <br />
           Cycle through them with the{' '}
           <ChevronLeftIcon
             fontSize="small"
-            style={{ verticalAlign: 'top' }}
+            style={{ verticalAlign: 'sub' }}
           />{' '}
           and{' '}
-          <ChevronRightIcon fontSize="small" style={{ verticalAlign: 'top' }} />{' '}
+          <ChevronRightIcon fontSize="small" style={{ verticalAlign: 'sub' }} />{' '}
           arrows.
         </>
       ),
@@ -98,7 +98,7 @@ const App = () => {
             src="images/sparkles.gif"
             alt="sparkles"
             width="24px"
-            style={{ verticalAlign: 'top' }}
+            style={{ verticalAlign: 'sub' }}
           />{' '}
           around it, hover your cursor over it to discover it!
           <br />
@@ -108,7 +108,7 @@ const App = () => {
             src="images/bird.png"
             alt="bird symbol"
             width="20px"
-            style={{ verticalAlign: 'top' }}
+            style={{ verticalAlign: 'sub' }}
           />
           .
         </>
@@ -122,13 +122,13 @@ const App = () => {
       content: (
         <>
           Click the{' '}
-          <ExtensionIcon fontSize="small" style={{ verticalAlign: 'top' }} />{' '}
+          <ExtensionIcon fontSize="small" style={{ verticalAlign: 'sub' }} />{' '}
           located in the top right corner of your browser.
           <br />
           Then click the{' '}
           <PushPinOutlinedIcon
             fontSize="small"
-            style={{ verticalAlign: 'top' }}
+            style={{ verticalAlign: 'sub' }}
           />{' '}
           next to Birdwatcher.
         </>
