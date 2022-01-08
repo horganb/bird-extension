@@ -4,7 +4,7 @@ import { gameOptions, LOOP_SPEED, queueRemoval } from './contentScript';
 import { Platform, PlatformLocation, Point } from './location';
 
 const BIRD_SIZE = 16;
-export const ACTION_FACTOR = 0.002;
+export const ACTION_FACTOR = 0.01;
 
 const ActionTypes = {
   FLYING: 'flying',
@@ -232,7 +232,7 @@ export default class Bird {
   getEdgePoint() {
     const x = Math.floor(Math.random() * 2)
       ? 0
-      : document.documentElement.clientWidth - this.getWidth();
+      : document.documentElement.clientWidth - this.getWidth() * 2;
     const y =
       Math.floor(Math.random() * document.documentElement.clientHeight) +
       document.documentElement.scrollTop;
