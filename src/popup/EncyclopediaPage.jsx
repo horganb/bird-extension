@@ -48,8 +48,10 @@ const EncyclopediaPage = () => {
       <div
         style={{ padding: '6px', display: 'flex', justifyContent: 'center' }}
         onMouseEnter={() => {
-          setSelectedBirdType(birdType);
-          setShowBird(true);
+          if (birdsSeen[birdType.imagePath]) {
+            setSelectedBirdType(birdType);
+            setShowBird(true);
+          }
         }}
         onMouseLeave={() => {
           setShowBird(false);
@@ -64,14 +66,11 @@ const EncyclopediaPage = () => {
     allBirds.push(birdImage);
   }
 
-  const birdSeen =
-    selectedBirdType && birdsSeen[selectedBirdType.imagePath] ? true : false;
-
   return (
     <EncyclopediaContainer>
       <AllBirdsContainer>{allBirds}</AllBirdsContainer>
-      <BirdInfoContainer toShow={showBird && birdSeen}>
-        {birdSeen && (
+      <BirdInfoContainer toShow={showBird}>
+        {selectedBirdType && (
           <>
             <h2 style={{ margin: 0, textAlign: 'center' }}>
               {selectedBirdType.name}
