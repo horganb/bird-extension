@@ -34,7 +34,7 @@ const CustomStepper = ({ steps }) => {
                 {title}
               </Typography>
             </StepLabel>
-            <StepContent>
+            <StepContent style={{ lineHeight: '175%' }}>
               {content}
               {activeStep === index && (
                 <Box sx={{ mb: 2 }}>
@@ -65,27 +65,52 @@ const App = () => {
       title: 'Viewing Birds',
       content: (
         <>
-          <Typography>
-            Click the new&nbsp;
-            <img src="images/icon.png" alt="bird" />
-            &nbsp;in the top right corner of your browser.
-          </Typography>
-          <Typography>
-            Here you can view info about the birds on your screen!
-          </Typography>
-          <Typography>
-            Cycle through them with the&nbsp;
-            <ChevronLeftIcon
-              fontSize="small"
-              style={{ verticalAlign: 'top' }}
-            />
-            &nbsp;and&nbsp;
-            <ChevronRightIcon
-              fontSize="small"
-              style={{ verticalAlign: 'top' }}
-            />
-            &nbsp;arrows.
-          </Typography>
+          Click the new <img src="images/icon.png" alt="bird" /> in the top
+          right corner of your browser to open the menu.
+          <br />
+          You can view info about the birds on your screen in the{' '}
+          <strong>Inspector</strong>{' '}
+          <img
+            src="images/binoculars.png"
+            alt="binoculars"
+            width="20px"
+            style={{ verticalAlign: 'top' }}
+          />
+          .
+          <br />
+          Cycle through them with the{' '}
+          <ChevronLeftIcon
+            fontSize="small"
+            style={{ verticalAlign: 'top' }}
+          />{' '}
+          and{' '}
+          <ChevronRightIcon fontSize="small" style={{ verticalAlign: 'top' }} />{' '}
+          arrows.
+        </>
+      ),
+    },
+    {
+      title: 'Your Bird Log',
+      content: (
+        <>
+          If you see a bird with{' '}
+          <img
+            src="images/sparkles.gif"
+            alt="sparkles"
+            width="24px"
+            style={{ verticalAlign: 'top' }}
+          />{' '}
+          around it, hover your cursor over it to discover it!
+          <br />
+          You can access all of the birds you have discovered in your{' '}
+          <strong>Bird Log</strong>{' '}
+          <img
+            src="images/bird.png"
+            alt="bird symbol"
+            width="20px"
+            style={{ verticalAlign: 'top' }}
+          />
+          .
         </>
       ),
     },
@@ -96,19 +121,16 @@ const App = () => {
       title: 'Getting Started',
       content: (
         <>
-          <Typography>
-            Click the&nbsp;
-            <ExtensionIcon fontSize="small" style={{ verticalAlign: 'top' }} />
-            &nbsp;located in the top right corner of your browser.
-          </Typography>
-          <Typography>
-            Then click the&nbsp;
-            <PushPinOutlinedIcon
-              fontSize="small"
-              style={{ verticalAlign: 'top' }}
-            />
-            &nbsp;next to Birdwatcher.
-          </Typography>
+          Click the{' '}
+          <ExtensionIcon fontSize="small" style={{ verticalAlign: 'top' }} />{' '}
+          located in the top right corner of your browser.
+          <br />
+          Then click the{' '}
+          <PushPinOutlinedIcon
+            fontSize="small"
+            style={{ verticalAlign: 'top' }}
+          />{' '}
+          next to Birdwatcher.
         </>
       ),
     });

@@ -5,6 +5,8 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import {
   EncyclopediaContainer,
   AllBirdsContainer,
+  BirdInfoResizeContainer,
+  theme,
   BirdInfoContainer,
 } from './styles';
 import { birdTypes } from '../contentScripts/birdType';
@@ -39,11 +41,17 @@ const EncyclopediaPage = () => {
 
   for (const birdType of birdsByRarity) {
     const gridBirdStyle = { width: '35px', imageRendering: 'pixelated' };
+    const selectedBirdStyle = {
+      filter: `drop-shadow(0 0 4px ${theme.palette.primary.main})`,
+    };
     const grayedOutFilter = 'contrast(0) brightness(150%)';
     const grayedOutStyle = {
       WebkitFilter: grayedOutFilter,
       filter: grayedOutFilter,
     };
+    if (birdType.imagePath === selectedBirdType?.imagePath && showBird) {
+      Object.assign(gridBirdStyle, selectedBirdStyle);
+    }
     if (!birdsSeen[birdType.imagePath]) {
       Object.assign(gridBirdStyle, grayedOutStyle);
     }
@@ -72,33 +80,36 @@ const EncyclopediaPage = () => {
   return (
     <EncyclopediaContainer>
       <AllBirdsContainer>{allBirds}</AllBirdsContainer>
-      <BirdInfoContainer toShow={showBird}>
-        {selectedBirdType && (
-          <>
-            <h2 style={{ margin: 0, textAlign: 'center' }}>
-              {selectedBirdType.name}
-            </h2>
-            <h4
-              style={{
-                margin: 0,
-                textAlign: 'center',
-                fontStyle: 'italic',
-              }}
-            >
-              {selectedBirdType.species}
-            </h4>
-            <img
-              src={localURL(
-                `images/birds/${selectedBirdType.imagePath}/standing.png`
-              )}
-              style={{
-                width: '40px',
-                imageRendering: 'pixelated',
-              }}
-            />
-          </>
-        )}
-      </BirdInfoContainer>
+      <BirdInfoResizeContainer toShow={showBird}>
+        <BirdInfoContainer>
+          {' '}
+          {selectedBirdType && (
+            <>
+              <h2 style={{ margin: 0, textAlign: 'center' }}>
+                {selectedBirdType.name}
+              </h2>
+              <h4
+                style={{
+                  margin: 0,
+                  textAlign: 'center',
+                  fontStyle: 'italic',
+                }}
+              >
+                {selectedBirdType.species}
+              </h4>
+              <img
+                src={localURL(
+                  `images/birds/${selectedBirdType.imagePath}/standing.png`
+                )}
+                style={{
+                  width: '40px',
+                  imageRendering: 'pixelated',
+                }}
+              />
+            </>
+          )}
+        </BirdInfoContainer>
+      </BirdInfoResizeContainer>
     </EncyclopediaContainer>
   );
 };

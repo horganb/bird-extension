@@ -53,4 +53,5 @@ export const InfoContainer = styled('div')(({ theme }) => ({
   justifyContent: 'center',
   padding: '4.75rem',
   paddingTop: '2.85rem',
+  maxWidth: '850px',
 }));
