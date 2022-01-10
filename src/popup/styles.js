@@ -45,6 +45,7 @@ export const PopupContainer = styled('div')(({ theme }) => ({
 export const BirdInspectorContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   justifyContent: 'space-between',
+  alignItems: 'center',
   fontFamily: 'Domine',
 }));
 
@@ -52,14 +53,23 @@ export const EncyclopediaContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   justifyContent: 'center',
-  fontFamily: 'Domine',
+  margin: '-.5rem',
+}));
+
+export const AllBirdsPageContainer = styled('div')(({ theme }) => ({
+  display: 'flex',
+  flexDirection: 'row',
+  justifyContent: 'center',
+  alignItems: 'center',
 }));
 
 export const AllBirdsContainer = styled('div')(({ theme }) => ({
   display: 'grid',
   gridTemplateColumns: 'repeat(5, 1fr)',
+  gridAutoRows: '1fr',
   alignItems: 'center',
-  padding: '10px 20px',
+  padding: '15px 0',
+  marginBottom: '0.5rem',
 }));
 
 export const CenteredFlexColumn = styled('div')(({ theme }) => ({
@@ -69,15 +79,31 @@ export const CenteredFlexColumn = styled('div')(({ theme }) => ({
 }));
 
 export const BirdInfoResizeContainer = styled(CenteredFlexColumn)(
-  ({ toShow }) => ({
-    maxHeight: toShow ? '10rem' : '0',
+  ({ theme, toShow }) => ({
+    maxHeight: toShow ? '20rem' : '0',
     transition: 'max-height 0.3s',
     overflow: 'hidden',
+    backgroundColor: '#d8faff',
+    width: '100%',
   })
 );
 
-export const BirdInfoContainer = styled(CenteredFlexColumn)(() => ({
+export const BirdInfoContainer = styled('div')(() => ({
+  width: '100%',
+  padding: '15px',
+}));
+
+export const BirdTitleContainer = styled('div')(() => ({
+  fontFamily: 'Domine',
+  paddingBottom: '10px',
+}));
+
+export const FactsContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'space-between',
   padding: '10px',
+  paddingRight: '16px',
 }));
 
 export const CheckboxContainer = styled('div')(({ theme }) => ({

@@ -8,6 +8,9 @@ import {
   BirdInfoResizeContainer,
   theme,
   BirdInfoContainer,
+  FactsContainer,
+  BirdTitleContainer,
+  AllBirdsPageContainer,
 } from './styles';
 import { birdTypes } from '../contentScripts/birdType';
 import { localURL } from '../contentScripts/utils';
@@ -57,7 +60,7 @@ const EncyclopediaPage = () => {
     }
     const birdImage = (
       <div
-        style={{ padding: '6px', display: 'flex', justifyContent: 'center' }}
+        style={{ padding: '4px', display: 'flex', justifyContent: 'center' }}
         onMouseEnter={() => {
           if (birdsSeen[birdType.imagePath]) {
             setSelectedBirdType(birdType);
@@ -77,35 +80,83 @@ const EncyclopediaPage = () => {
     allBirds.push(birdImage);
   }
 
+  const rightPage = () => {
+    setPageIndex(previousPageIndex => previousPageIndex + 1);
+  };
+  const leftPage = () => {
+    setPageIndex(previousPageIndex => previousPageIndex - 1);
+  };
+
+  const BIRDS_PER_PAGE = 15;
+
+  const startingBird = pageIndex * BIRDS_PER_PAGE;
+  const birdsOnPage = allBirds.slice(
+    startingBird,
+    startingBird + BIRDS_PER_PAGE
+  );
+
+  const diff = allBirds.length - (startingBird + BIRDS_PER_PAGE);
+
+  for (let i = diff; i < 0; i++) {
+    birdsOnPage.push(<div></div>);
+  }
+
+  const lastPage = Math.floor((allBirds.length - 1) / BIRDS_PER_PAGE);
+
+  const showLeftArrow = pageIndex > 0;
+  const showRightArrow = pageIndex < lastPage;
+
+  const leftArrowStyle = showLeftArrow ? {} : { visibility: 'hidden' };
+  const rightArrowStyle = showRightArrow ? {} : { visibility: 'hidden' };
+
   return (
     <EncyclopediaContainer>
-      <AllBirdsContainer>{allBirds}</AllBirdsContainer>
+      <AllBirdsPageContainer>
+        <IconButton onClick={leftPage} style={leftArrowStyle}>
+          <ChevronLeftIcon />
+        </IconButton>
+        <AllBirdsContainer>{birdsOnPage}</AllBirdsContainer>
+        <IconButton onClick={rightPage} style={rightArrowStyle}>
+          <ChevronRightIcon />
+        </IconButton>
+      </AllBirdsPageContainer>
       <BirdInfoResizeContainer toShow={showBird}>
         <BirdInfoContainer>
           {' '}
           {selectedBirdType && (
             <>
-              <h2 style={{ margin: 0, textAlign: 'center' }}>
-                {selectedBirdType.name}
-              </h2>
-              <h4
-                style={{
-                  margin: 0,
-                  textAlign: 'center',
-                  fontStyle: 'italic',
-                }}
-              >
-                {selectedBirdType.species}
-              </h4>
-              <img
-                src={localURL(
-                  `images/birds/${selectedBirdType.imagePath}/standing.png`
-                )}
-                style={{
-                  width: '40px',
-                  imageRendering: 'pixelated',
-                }}
-              />
+              <BirdTitleContainer>
+                <h2 style={{ margin: 0, textAlign: 'center' }}>
+                  {selectedBirdType.name}
+                </h2>
+                <h4
+                  style={{
+                    margin: 0,
+                    textAlign: 'center',
+                    fontStyle: 'italic',
+                  }}
+                >
+                  {selectedBirdType.species}
+                </h4>
+              </BirdTitleContainer>
+              <FactsContainer>
+                <div style={{ fontSize: '14px' }}>
+                  <strong>Habitat:</strong> {'Forest'} <br />
+                  <strong>Wingspan:</strong> {'20-30 cm'} <br />
+                  <strong>Weight:</strong> {'100 g'} <br />
+                </div>
+                <div style={{ textAlign: 'center' }}>
+                  <img
+                    src={localURL(
+                      `images/birds/${selectedBirdType.imagePath}/standing.png`
+                    )}
+                    style={{
+                      width: '54px',
+                      imageRendering: 'pixelated',
+                    }}
+                  />
+                </div>
+              </FactsContainer>
             </>
           )}
         </BirdInfoContainer>
