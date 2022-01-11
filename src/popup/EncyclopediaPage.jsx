@@ -60,7 +60,7 @@ const EncyclopediaPage = () => {
     }
     const birdImage = (
       <div
-        style={{ padding: '4px', display: 'flex', justifyContent: 'center' }}
+        style={{ padding: '4.5px', display: 'flex', justifyContent: 'center' }}
         onMouseEnter={() => {
           if (birdsSeen[birdType.imagePath]) {
             setSelectedBirdType(birdType);
@@ -109,6 +109,11 @@ const EncyclopediaPage = () => {
   const leftArrowStyle = showLeftArrow ? {} : { visibility: 'hidden' };
   const rightArrowStyle = showRightArrow ? {} : { visibility: 'hidden' };
 
+  const average = array => {
+    const avg = array.reduce((a, b) => a + b, 0) / array.length;
+    return Math.round((avg + Number.EPSILON) * 100) / 100;
+  };
+
   return (
     <EncyclopediaContainer>
       <AllBirdsPageContainer>
@@ -142,8 +147,11 @@ const EncyclopediaPage = () => {
               <FactsContainer>
                 <div style={{ fontSize: '14px' }}>
                   <strong>Habitat:</strong> {'Forest'} <br />
-                  <strong>Wingspan:</strong> {'20-30 cm'} <br />
-                  <strong>Weight:</strong> {'100 g'} <br />
+                  <strong>Wingspan:</strong>{' '}
+                  {average(selectedBirdType.wingspan)} cm
+                  <br />
+                  <strong>Average Weight:</strong>{' '}
+                  {average(selectedBirdType.mass)} g<br />
                 </div>
                 <div style={{ textAlign: 'center' }}>
                   <img
