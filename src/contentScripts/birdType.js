@@ -9,6 +9,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [85, 100],
     mass: [316, 620],
+    fact: 'The American crow thrives around people, often spotted in agricultural fields, lawns, parking lots, athletic fields, roadsides, towns, and city garbage dumps.',
   },
   {
     name: 'American Goldfinch',
@@ -20,6 +21,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [19, 22],
     mass: [11, 20],
+    fact: 'As one of the strictest vegetarians in the bird world, the American goldfinch feeds on a wide variety of seeds, including those of dandelion, teasel, and goatsbeard.',
   },
   {
     name: "Anna's Hummingbird",
@@ -31,6 +33,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [4.7],
     mass: [2.8, 5.7],
+    fact: "The Anna's hummingbird can shake its body 55 times per second to shed rain or remove pollen or dirt from feathers.",
   },
   {
     name: 'Baltimore Oriole',
@@ -42,6 +45,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [23, 32],
     mass: [22.3, 42],
+    fact: 'With a strong preference for dark-colored fruits, orioles will ignore green grapes and yellow cherries even if they are ripe.',
   },
   {
     name: 'Bee Hummingbird',
@@ -53,6 +57,7 @@ export const birdTypes = [
     habitat: 'Rainforests',
     wingspan: [3.25],
     mass: [1.95],
+    fact: "As the smallest species of bird, the bee hummingbird's iridescence gives it the appearance of a tiny jewel.",
   },
   {
     name: 'Black-billed Magpie',
@@ -64,6 +69,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [20.5, 21.9],
     mass: [167, 216],
+    fact: 'The black-billed Magpie frequently picks ticks from the backs of large mammals, such as deer and moose.',
   },
   {
     name: 'Blue Jay',
@@ -75,6 +81,7 @@ export const birdTypes = [
     habitat: 'Forests',
     wingspan: [34, 43],
     mass: [70, 100],
+    fact: 'The blue jay frequently mimics the calls of hawks, possibly to deceive other species into believing a hawk is present.',
   },
   {
     name: 'House Sparrow',
@@ -86,6 +93,7 @@ export const birdTypes = [
     habitat: 'Towns',
     wingspan: [19, 25],
     mass: [24, 39.5],
+    fact: 'The house sparrow is a very social bird, engaging in "social singing" sessions, roosting communally, and forming flocks with other species of birds.',
   },
   {
     name: 'Indigo Bunting',
@@ -97,6 +105,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [18, 23],
     mass: [11.2, 21.4],
+    fact: 'The male indigo bunting is vibrant blue in the summer, with brightly colored plumage during the breeding season to attract a mate, but brown in the winter.',
   },
   {
     name: "Major Mitchell's Cockatoo",
@@ -108,6 +117,7 @@ export const birdTypes = [
     habitat: 'Tropical Dry Forests',
     wingspan: [81],
     mass: [300, 450],
+    fact: "A hardy and bright bird, Major Mitchell's cockatoo boasts an impressive lifespan, with the oldest individual having lived 83 years.",
   },
   {
     name: 'Mourning Dove',
@@ -119,6 +129,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [37, 45],
     mass: [112, 170],
+    fact: 'A prolific breeder, the mourning dove may raise up to six broods of two young each in a single year.',
   },
   {
     name: 'Northern Cardinal',
@@ -130,6 +141,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [25, 31],
     mass: [33.6, 65],
+    fact: 'The northern cardinal is fiercely territorial, and will sometimes spend hours relentlessly attempting to fight its own reflection in a window.',
   },
   {
     name: 'Rainbow Lorikeet',
@@ -141,6 +153,7 @@ export const birdTypes = [
     habitat: 'Rainforests',
     wingspan: [25, 30],
     mass: [75, 157],
+    fact: 'The rainbow lorikeet is monogamous, and they are usually seen flying in pairs.',
   },
   {
     name: 'Release Dove',
@@ -152,6 +165,7 @@ export const birdTypes = [
     habitat: 'Domestic',
     wingspan: [62, 72],
     mass: [238, 380],
+    fact: "The release dove's feathers are loosely attached to it's body, allowing for an easy escape if trapped by a predator.",
   },
   {
     name: 'Turkey',
@@ -163,6 +177,7 @@ export const birdTypes = [
     habitat: 'Open Woodlands',
     wingspan: [125, 144],
     mass: [5000, 11000],
+    fact: "The colors of the turkey's head change among red, blue, and white, depending on how excited or calm it is.",
   },
 ];
 
