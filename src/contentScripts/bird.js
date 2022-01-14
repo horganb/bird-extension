@@ -229,8 +229,14 @@ export default class Bird {
   }
 
   /** Returns a random Point on the edge of the screen. */
-  getEdgePoint() {
-    const x = Math.floor(Math.random() * 2)
+  getEdgePoint(oppositeSide = false) {
+    let leftSide;
+    if (oppositeSide) {
+      leftSide = this.location.x > document.documentElement.clientWidth / 2;
+    } else {
+      leftSide = Math.floor(Math.random() * 2);
+    }
+    const x = leftSide
       ? 0
       : document.documentElement.clientWidth - this.getWidth();
     const y =
@@ -266,15 +272,15 @@ export default class Bird {
     const targetPlatform =
       validPlatforms[Math.floor(Math.random() * validPlatforms.length)];
     if (!targetPlatform) {
-      this.flyOffscreen();
+      this.flyOffscreen(true);
       return;
     }
     const destination = PlatformLocation.generateRandom(targetPlatform);
     this.flyToLocation(destination);
   }
 
-  flyOffscreen() {
-    this.flyToLocation(this.getEdgePoint());
+  flyOffscreen(oppositeSide = false) {
+    this.flyToLocation(this.getEdgePoint(oppositeSide));
     this.subAction = ActionTypes.FLYING_OFFSCREEN;
   }
 
