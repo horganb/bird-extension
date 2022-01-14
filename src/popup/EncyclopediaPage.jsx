@@ -11,6 +11,7 @@ import {
   FactsContainer,
   BirdTitleContainer,
   AllBirdsPageContainer,
+  FunFactContainer,
 } from './styles';
 import { birdTypes } from '../contentScripts/birdType';
 import { localURL } from '../contentScripts/utils';
@@ -166,6 +167,7 @@ const EncyclopediaPage = () => {
                   />
                 </div>
               </FactsContainer>
+              <FunFactContainer>{selectedBirdType.fact}</FunFactContainer>
             </>
           )}
         </BirdInfoContainer>

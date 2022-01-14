@@ -106,6 +106,18 @@ export const FactsContainer = styled('div')(() => ({
   paddingRight: '16px',
 }));
 
+export const FunFactContainer = styled('div')(() => ({
+  display: 'flex',
+  alignItems: 'center',
+  padding: '10px',
+  paddingTop: '0',
+  fontStyle: 'italic',
+  lineHeight: '1.35',
+  textAlign: 'justify',
+  fontSize: '13px',
+  fontWeight: '400',
+}));
+
 export const CheckboxContainer = styled('div')(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
