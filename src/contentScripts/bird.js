@@ -232,7 +232,7 @@ export default class Bird {
   getEdgePoint() {
     const x = Math.floor(Math.random() * 2)
       ? 0
-      : document.documentElement.clientWidth - this.getWidth() * 2;
+      : document.documentElement.clientWidth - this.getWidth();
     const y =
       Math.floor(Math.random() * document.documentElement.clientHeight) +
       document.documentElement.scrollTop;
@@ -305,6 +305,7 @@ export default class Bird {
     this.subAction = null;
     this.element.src = this.getFrameURL();
     this.actionTimers = new Array(getTimersForAction(action).length).fill(0);
+    this.updateStyles();
   }
 
   faceDestination() {
