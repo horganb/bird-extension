@@ -1,3 +1,5 @@
+import { LOOP_SPEED } from './contentScript';
+
 export const localURL = url => chrome.runtime.getURL(url);
 
 export const getPlatforms = (el = document.documentElement) => {
@@ -85,4 +87,26 @@ const isElementAtPoint = (el, x, y) => {
     // eslint-disable-next-line no-cond-assign
   } while ((pointContainer = pointContainer?.parentNode));
   return false;
+};
+
+/** Calls the given callback once the page is stable, i.e. the setInterval method calls its callback at an expected rate. */
+const waitUntilPageStable = callback => {
+  const TOLERANCE = LOOP_SPEED;
+  const STABLE_COUNT_GOAL = 75; // the number of correctly timed setInterval invocations required
+
+  let lastTime = Date.now();
+  let stableCount = 0;
+  const testInterval = setInterval(() => {
+    const diff = Date.now() - lastTime;
+    lastTime = Date.now();
+    if (diff < LOOP_SPEED + TOLERANCE) {
+      stableCount++;
+    } else {
+      stableCount = 0;
+    }
+    if (stableCount === STABLE_COUNT_GOAL) {
+      clearInterval(testInterval);
+      callback();
+    }
+  }, LOOP_SPEED);
 };
