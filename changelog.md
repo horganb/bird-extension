@@ -1,3 +1,13 @@
+## 1.1.1 (1/14/2022)
+
+### Added
+
+- Added more detailed bird info to Bird Log
+
+### Fixed
+
+- Fixed behavior when no platforms are onscreen
+
 ## 1.1.0 (1/8/2022)
 
 ### Added
