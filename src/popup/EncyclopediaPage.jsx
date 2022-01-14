@@ -146,7 +146,8 @@ const EncyclopediaPage = () => {
               </BirdTitleContainer>
               <FactsContainer>
                 <div style={{ fontSize: '14px' }}>
-                  <strong>Habitat:</strong> {'Forest'} <br />
+                  <strong>Habitat:</strong> {selectedBirdType.habitat}
+                  <br />
                   <strong>Wingspan:</strong>{' '}
                   {average(selectedBirdType.wingspan)} cm
                   <br />
