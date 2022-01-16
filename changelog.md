@@ -1,3 +1,9 @@
+## 1.1.2 (1/16/2022)
+
+### Fixed
+
+- Performance improvements while scrolling
+
 ## 1.1.1 (1/14/2022)
 
 ### Added
