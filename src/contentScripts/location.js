@@ -30,10 +30,13 @@ export class Dot {
     throw new AbstractMethodError();
   }
 
+  fitsBird(bird) {
+    return this.getYRelativeToWindow() - bird.getHeight() >= 0;
+  }
+
   /** Whether a bird can be at this Dot while being entirely visible. */
   isVisibleWithBird(bird) {
-    const fitsBird = this.getYRelativeToWindow() - bird.getHeight() >= 0;
-    return this.isVisible() && fitsBird;
+    return this.isVisible() && this.fitsBird(bird);
   }
 
   /** Convert to a point. */
@@ -140,8 +143,8 @@ export class Platform {
     }
   }
 
-  isVisibleWithBird(bird) {
-    return new PlatformLocation(this, 0).isVisibleWithBird(bird);
+  fitsBird(bird) {
+    return new PlatformLocation(this, 0).fitsBird(bird);
   }
 
   static getVisiblePlatforms(el = document.documentElement) {

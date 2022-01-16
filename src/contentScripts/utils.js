@@ -86,3 +86,60 @@ const isElementAtPoint = (el, x, y) => {
   } while ((pointContainer = pointContainer?.parentNode));
   return false;
 };
+
+let lastScrollTime;
+
+window.addEventListener('scroll', () => {
+  lastScrollTime = new Date().getTime();
+});
+
+export const isScrolling = () => {
+  return lastScrollTime && new Date().getTime() < lastScrollTime + 250;
+};
+
+// The below code may want to be used at some point for getting visible platforms whenever the document changes.
+
+// export const visiblePlatforms = Platform.getVisiblePlatforms()[0];
+
+// let hasChanges = false;
+
+// const watchForChanges = () => {
+//   const targetNode = Array.from(document.body.children).filter(
+//     el => el.id !== 'bird-ext'
+//   );
+//   const config = { attributes: true, childList: true, subtree: true };
+//   const callback = function (mutationsList, observer) {
+//     // Use traditional 'for loops' for IE 11
+//     for (const mutation of mutationsList) {
+//       hasChanges = true;
+//       // if (mutation.type === 'childList') {
+//       //   console.log('A child node has been added or removed.', mutation);
+//       // } else if (mutation.type === 'attributes') {
+//       //   console.log(
+//       //     'The ' + mutation.attributeName + ' attribute was modified.'
+//       //   );
+//       // }
+//     }
+//   };
+
+//   const observer = new MutationObserver(callback);
+//   observer.observe(document.body, { attributes: true });
+//   targetNode.forEach(el => {
+//     observer.observe(el, config);
+//   });
+//   // observer.observe(targetNode, config);
+// };
+
+// setInterval(() => {
+//   if (hasChanges) {
+//     console.log('has changes');
+//     hasChanges = false;
+//     visiblePlatforms.splice(
+//       0,
+//       visiblePlatforms.length,
+//       ...Platform.getVisiblePlatforms()[0]
+//     );
+//   }
+// }, 10);
+
+// watchForChanges();
