@@ -25,6 +25,7 @@ Now, add a shortcut to build the code and refresh the extension:
   }
 ]
 ```
+4. Use this hotkey to build before moving on.
 
 Adding development version of extension to Chrome:
 
