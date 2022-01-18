@@ -194,6 +194,14 @@ export const birdTypes = [
   },
 ];
 
+let usedBirdTypes = birdTypes;
+
+// only spawn nocturnal birds at night
+const currentHour = new Date().getHours();
+if (currentHour > 7 && currentHour < 19) {
+  usedBirdTypes = usedBirdTypes.filter(type => !type.nocturnal);
+}
+
 const getRarity = (birdType, birdsSeen) => {
   const SEEN_BIRD_RARITY_DECREASE = 5;
   let rarity = birdType.rarity;
@@ -206,7 +214,7 @@ const getRarity = (birdType, birdsSeen) => {
 
 const getRarityTotal = birdsSeen => {
   let total = 0;
-  for (const type of birdTypes) {
+  for (const type of usedBirdTypes) {
     total += 1 / getRarity(type, birdsSeen);
   }
   return total;
@@ -216,7 +224,7 @@ export const randomBirdType = () => {
   return chrome.storage.local.get({ birdsSeen: {} }).then(({ birdsSeen }) => {
     const pick = Math.random() * getRarityTotal(birdsSeen);
     let raritySum = 0;
-    for (const type of birdTypes) {
+    for (const type of usedBirdTypes) {
       raritySum += 1 / getRarity(type, birdsSeen);
       if (pick < raritySum) {
         return type;
