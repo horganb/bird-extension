@@ -25,12 +25,14 @@ Now, add a shortcut to build the code and refresh the extension:
   }
 ]
 ```
+4. Use this hotkey to build before moving on.
 
 Adding development version of extension to Chrome:
 
 1. In Chrome, navigate to `chrome://extensions`
-2. Disable the live version of the extension, if you have it
-3. Select "Load unpacked", and select the repository
+2. Enable "Developer mode"
+3. Disable the live version of the extension, if you have it
+4. Select "Load unpacked", and select the repository
 
 ## Development
 
