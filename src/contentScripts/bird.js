@@ -1,7 +1,9 @@
-import { isScrolling, localURL } from './utils';
+import { htmlToElement, isScrolling, localURL } from './utils';
 import dom from './dom';
 import { gameOptions, queueRemoval } from './contentScript';
 import { Platform, PlatformLocation, Point } from './location';
+import indicatorArrow from './html/indicator_arrow.html';
+import newBirdMessageElmnt from './html/new_bird_message.html';
 
 const BIRD_SIZE = 16;
 export const ACTION_FACTOR = 0.01;
@@ -60,17 +62,19 @@ export default class Bird {
    * @param {Object} type Type of bird.
    */
   constructor(type) {
-    const birdContainer = document.createElement('DIV');
-    birdContainer.className = 'bird-ext-bird-container';
-    dom.appendChild(birdContainer);
+    this.containerElement = document.createElement('DIV');
+    this.containerElement.className = 'bird-ext-bird-container';
+    Object.assign(this.containerElement.style, {
+      width: `${this.getWidth()}px`,
+      height: `${this.getHeight()}px`,
+    });
+    dom.appendChild(this.containerElement);
 
-    const birdElement = document.createElement('IMG');
-    birdElement.className = 'bird-ext-bird-image';
-    birdContainer.appendChild(birdElement);
+    this.element = document.createElement('IMG');
+    this.element.className = 'bird-ext-bird-image';
+    this.containerElement.appendChild(this.element);
 
     this.type = type;
-    this.element = birdElement;
-    this.containerElement = birdContainer;
     this.location = this.getEdgePoint();
     this.lastLocation = this.location.toPoint();
     this.xSpeed = type.speed;
@@ -153,7 +157,6 @@ export default class Bird {
 
   remove() {
     this.containerElement.remove();
-    this.newBirdIndicator?.remove();
     queueRemoval(this);
   }
 
@@ -170,12 +173,19 @@ export default class Bird {
     return localURL(`images/birds/${this.imagePath}/${filename}`);
   }
 
+  setSelected(selected = true) {
+    if (selected) {
+      this.selectedIndicator = htmlToElement(indicatorArrow);
+      this.containerElement.appendChild(this.selectedIndicator);
+    } else {
+      this.selectedIndicator?.remove();
+    }
+  }
+
   // Private methods
 
   showNewBirdMessage() {
-    const newBirdMessage = document.createElement('p');
-    newBirdMessage.innerHTML = 'New Bird Discovered!';
-    newBirdMessage.className = 'bird-ext-page-text';
+    const newBirdMessage = htmlToElement(newBirdMessageElmnt);
 
     const animationLength = 2000;
 
@@ -366,14 +376,9 @@ export default class Bird {
   }
 
   updateStyles() {
-    Object.assign(this.element.style, {
-      transform: this.getTransform(),
-    });
+    this.element.style.transform = this.getTransform();
     if (this.action === ActionTypes.FLYING) {
-      Object.assign(this.containerElement.style, {
-        left: `${this.getBirdLeft()}px`,
-        top: `${this.getBirdTop()}px`,
-      });
+      this.containerElement.style.transform = `translate(${this.getBirdLeft()}px, ${this.getBirdTop()}px)`;
     }
   }
 }
