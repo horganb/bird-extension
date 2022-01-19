@@ -1,6 +1,6 @@
 import { isScrolling, localURL } from './utils';
 import dom from './dom';
-import { gameOptions, LOOP_SPEED, queueRemoval } from './contentScript';
+import { gameOptions, queueRemoval } from './contentScript';
 import { Platform, PlatformLocation, Point } from './location';
 
 const BIRD_SIZE = 16;
@@ -73,8 +73,8 @@ export default class Bird {
     this.containerElement = birdContainer;
     this.location = this.getEdgePoint();
     this.lastLocation = this.location.toPoint();
-    this.xSpeed = type.speed * LOOP_SPEED;
-    this.ySpeed = type.speed * LOOP_SPEED * 0.8;
+    this.xSpeed = type.speed;
+    this.ySpeed = type.speed * 0.8;
     this.imagePath = type.imagePath;
     this.action = null;
     this.subAction = null;
@@ -115,8 +115,8 @@ export default class Bird {
 
   // Public methods
 
-  update() {
-    this.incrementTimers();
+  update(loopSpeed) {
+    this.incrementTimers(loopSpeed);
     if (this.action === ActionTypes.FLYING) {
       if (
         !this.destination.isVisibleWithBird(this) &&
@@ -125,7 +125,7 @@ export default class Bird {
       ) {
         this.flyToRandomPlatform();
       }
-      this.moveTowardDestination();
+      this.moveTowardDestination(loopSpeed);
       if (this.location.equals(this.destination)) {
         if (this.subAction === ActionTypes.FLYING_OFFSCREEN) {
           this.remove();
@@ -293,9 +293,9 @@ export default class Bird {
     }
   }
 
-  incrementTimers() {
+  incrementTimers(loopSpeed) {
     for (let i = 0; i < this.actionTimers.length; i++) {
-      this.actionTimers[i] += LOOP_SPEED;
+      this.actionTimers[i] += loopSpeed;
       const timerData = getTimersForAction(this.action)[i];
       if (
         this.actionTimers[i] > timerData.minimum &&
@@ -334,20 +334,23 @@ export default class Bird {
     this.location[axis] += Math.min(amount, distanceRemaining) * direction;
   }
 
-  moveTowardDestination() {
+  moveTowardDestination(loopSpeed) {
     this.faceDestination();
+
+    const realXSpeed = this.xSpeed * loopSpeed;
+    const realYSpeed = this.xSpeed * loopSpeed;
 
     const xDistance = Math.abs(this.getDistanceFromDest('x'));
     const yDistance = Math.abs(this.getDistanceFromDest('y'));
 
-    const horizTimeToDest = xDistance / this.xSpeed;
-    const vertTimeToDest = yDistance / this.ySpeed;
+    const horizTimeToDest = xDistance / realXSpeed;
+    const vertTimeToDest = yDistance / realYSpeed;
 
     const ySpeedFactor = Math.min(1, vertTimeToDest / horizTimeToDest);
     const xSpeedFactor = Math.min(1, horizTimeToDest / vertTimeToDest);
 
-    this.moveInDirectionTowardDest('x', this.xSpeed * xSpeedFactor);
-    this.moveInDirectionTowardDest('y', this.ySpeed * ySpeedFactor);
+    this.moveInDirectionTowardDest('x', realXSpeed * xSpeedFactor);
+    this.moveInDirectionTowardDest('y', realYSpeed * ySpeedFactor);
   }
 
   getTransform() {

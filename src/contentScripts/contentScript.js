@@ -9,8 +9,6 @@ import { getDomain } from '../utils';
 import ArrowDropDownOutlinedIcon from '@mui/icons-material/ArrowDropDownOutlined';
 import { localURL } from './utils';
 
-export const LOOP_SPEED = 10;
-
 export const gameOptions = { ...defaultSettings };
 
 let activeBirds = [];
@@ -27,7 +25,12 @@ const spawnRandomBird = () => {
   });
 };
 
-const mainLoop = () => {
+let lastTime = 0;
+
+const mainLoop = timeStamp => {
+  const loopSpeed = timeStamp - lastTime;
+  lastTime = timeStamp;
+
   if (chrome.runtime.id === undefined) {
     // if the extension was deactivated, remove birds.
     stopBirds();
@@ -49,7 +52,7 @@ const mainLoop = () => {
   }
 
   activeBirds.forEach(bird => {
-    bird.update();
+    bird.update(loopSpeed);
   });
 
   activeBirds = activeBirds.filter(bird => !toRemove.includes(bird));
@@ -59,12 +62,14 @@ const mainLoop = () => {
     activeBirds.pop();
   }
   toRemove = [];
+
+  requestAnimationFrame(mainLoop);
 };
 
 let gameInterval;
 
 const startBirds = () => {
-  gameInterval = setInterval(mainLoop, LOOP_SPEED);
+  requestAnimationFrame(mainLoop);
   setTimeout(() => {
     // spawn bird after some time if none have spawned yet
     if (activeBirds.length === 0) {
