@@ -1,6 +1,6 @@
 import { randomBirdType } from './birdType';
 import Bird, { ACTION_FACTOR } from './bird';
-import './contentScriptStyles.css';
+import './contentScriptStyles.scss';
 import { defaultSettings } from '../defaultSettings';
 import { getDomain } from '../utils';
 import { localURL } from './utils';
