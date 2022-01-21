@@ -138,7 +138,7 @@ export default class Bird {
           this.location = this.destination;
         }
       }
-    } else if (this.action === ActionTypes.IDLE) {
+    } else if ([ActionTypes.IDLE, ActionTypes.EATING].includes(this.action)) {
       if (
         (!this.location.isVisibleWithBird(this) && !isScrolling()) ||
         !this.location.equals(this.lastLocation, 0.01)
@@ -271,7 +271,9 @@ export default class Bird {
    * @param {Dot} location
    */
   flyToLocation(location) {
-    this.location = this.location.toPoint();
+    this.location = this.location.exists()
+      ? this.location.toPoint()
+      : this.lastLocation.toPoint();
     this.destination = location;
     this.setAction(ActionTypes.FLYING);
   }

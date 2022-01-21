@@ -36,7 +36,7 @@ export class Dot {
 
   /** Whether a bird can be at this Dot while being entirely visible. */
   isVisibleWithBird(bird) {
-    return this.isVisible() && this.fitsBird(bird);
+    return this.exists() && this.isVisible() && this.fitsBird(bird);
   }
 
   /** Convert to a point. */
@@ -50,6 +50,10 @@ export class Dot {
       Math.abs(this.x - other.x) <= tolerance &&
       Math.abs(this.y - other.y) <= tolerance
     );
+  }
+
+  exists() {
+    return true;
   }
 }
 
@@ -203,6 +207,10 @@ export class PlatformLocation extends Dot {
   /** Whether this is a location on a visible platform. */
   isVisible() {
     return this.platform.isVisible();
+  }
+
+  exists() {
+    return this.platform.clientRect ? true : false;
   }
 
   /**
