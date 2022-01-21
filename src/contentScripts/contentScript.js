@@ -21,6 +21,7 @@ const spawnRandomBird = () => {
   });
 };
 
+let gameInterval;
 let lastTime = 0;
 
 const mainLoop = timeStamp => {
@@ -59,14 +60,14 @@ const mainLoop = timeStamp => {
   }
   toRemove = [];
 
-  requestAnimationFrame(mainLoop);
+  gameInterval = requestAnimationFrame(mainLoop);
 };
 
-let gameInterval;
+let spawnTimeout;
 
 const startBirds = () => {
-  requestAnimationFrame(mainLoop);
-  setTimeout(() => {
+  gameInterval = requestAnimationFrame(mainLoop);
+  spawnTimeout = setTimeout(() => {
     // spawn bird after some time if none have spawned yet
     if (activeBirds.length === 0) {
       spawnRandomBird();
@@ -83,7 +84,8 @@ const removeBirds = () => {
 
 export const stopBirds = () => {
   removeBirds();
-  clearInterval(gameInterval);
+  cancelAnimationFrame(gameInterval);
+  clearTimeout(spawnTimeout);
 };
 
 const getCurrentDomain = () => {
