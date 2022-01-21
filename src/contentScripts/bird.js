@@ -377,8 +377,6 @@ export default class Bird {
 
   updateStyles() {
     this.element.style.transform = this.getTransform();
-    if (this.action === ActionTypes.FLYING) {
-      this.containerElement.style.transform = `translate(${this.getBirdLeft()}px, ${this.getBirdTop()}px)`;
-    }
+    this.containerElement.style.transform = `translate(${this.getBirdLeft()}px, ${this.getBirdTop()}px)`;
   }
 }
