@@ -25,7 +25,7 @@ let gameInterval;
 let lastTime = 0;
 
 const mainLoop = timeStamp => {
-  const loopSpeed = timeStamp - lastTime;
+  const loopSpeed = Math.min(timeStamp - lastTime, 40); // limit this value to prevent choppy visuals
   lastTime = timeStamp;
 
   if (chrome.runtime.id === undefined) {
