@@ -200,7 +200,7 @@ export default class Bird {
         transform: 'translate(-50%, -300%)',
         opacity: 0,
       });
-    }, 10);
+    }, 50);
     setTimeout(() => {
       newBirdMessage.remove();
     }, animationLength);

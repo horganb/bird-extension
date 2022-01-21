@@ -125,7 +125,7 @@ export const birdTypes = [
     species: 'Lophochroa leadbeateri',
     imagePath: 'majorMitchellsCockatoo',
     speed: 0.3,
-    rarity: 4,
+    rarity: 10,
     region: 'Australia',
     habitat: 'Tropical Dry Forests',
     wingspan: [81],
@@ -161,7 +161,7 @@ export const birdTypes = [
     species: 'Trichoglossus moluccanus',
     imagePath: 'rainbowLorikeet',
     speed: 0.3,
-    rarity: 4,
+    rarity: 12,
     region: 'Australia',
     habitat: 'Rainforests',
     wingspan: [25, 30],
@@ -173,7 +173,7 @@ export const birdTypes = [
     species: 'Columba livia domestica',
     imagePath: 'releaseDove',
     speed: 0.25,
-    rarity: 2,
+    rarity: 4,
     region: 'Widespread',
     habitat: 'Domestic',
     wingspan: [62, 72],
@@ -185,7 +185,7 @@ export const birdTypes = [
     species: 'Meleagris gallopavo',
     imagePath: 'turkey',
     speed: 0.2,
-    rarity: 6,
+    rarity: 8,
     region: 'N. America',
     habitat: 'Open Woodlands',
     wingspan: [125, 144],
@@ -203,7 +203,7 @@ if (currentHour > 7 && currentHour < 19) {
 }
 
 const getRarity = (birdType, birdsSeen) => {
-  const SEEN_BIRD_RARITY_DECREASE = 5;
+  const SEEN_BIRD_RARITY_DECREASE = 10;
   let rarity = birdType.rarity;
   if (birdsSeen[birdType.imagePath]) {
     // if this bird has been seen before, significantly decrease its rarity
