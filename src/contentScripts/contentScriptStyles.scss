@@ -10,6 +10,8 @@ div.bird-ext-bird-container {
     pointer-events: none; /* this is to exclude the bird from the call to document.elementFromPoint */
     :not(svg):not(path) {
       all: unset;
+      z-index: 2147483647;
+      pointer-events: none;
     }
   }
 
