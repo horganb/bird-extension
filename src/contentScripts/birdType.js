@@ -24,6 +24,18 @@ export const birdTypes = [
     fact: 'As one of the strictest vegetarians in the bird world, the American goldfinch feeds on a wide variety of seeds, including those of dandelion, teasel, and goatsbeard.',
   },
   {
+    name: 'American Robin',
+    species: 'Turdus migratorius',
+    imagePath: 'americanRobin',
+    speed: 0.3,
+    rarity: 1,
+    region: 'N. America',
+    habitat: 'Open Woodlands',
+    wingspan: [31, 41],
+    mass: [72, 94],
+    fact: 'The American robin is the most abundant bird in North America, with 370,000,000 estimated individuals.',
+  },
+  {
     name: "Anna's Hummingbird",
     species: 'Calypte anna',
     imagePath: 'annasHummingbird',
