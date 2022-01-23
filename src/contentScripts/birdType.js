@@ -228,7 +228,7 @@ if (currentHour > 7 && currentHour < 19) {
 }
 
 const getRarity = (birdType, birdsSeen) => {
-  const SEEN_BIRD_RARITY_DECREASE = 40;
+  const SEEN_BIRD_RARITY_DECREASE = 50;
   let rarity = birdType.rarity;
   if (birdsSeen[birdType.imagePath]) {
     // if this bird has been seen before, significantly decrease its rarity
