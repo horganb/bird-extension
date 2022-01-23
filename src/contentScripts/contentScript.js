@@ -9,6 +9,11 @@ export const gameOptions = { ...defaultSettings };
 
 let activeBirds = [];
 let toRemove = [];
+let gameInterval;
+let spawnTimeout;
+let lastTime = 0;
+let birdsEnabled = false;
+let documentReady = false;
 
 export const queueRemoval = bird => {
   toRemove.push(bird);
@@ -20,9 +25,6 @@ const spawnRandomBird = () => {
     activeBirds.push(newBird);
   });
 };
-
-let gameInterval;
-let lastTime = 0;
 
 const mainLoop = timeStamp => {
   const loopSpeed = Math.min(timeStamp - lastTime, 40); // limit this value to prevent choppy visuals
@@ -63,16 +65,17 @@ const mainLoop = timeStamp => {
   gameInterval = requestAnimationFrame(mainLoop);
 };
 
-let spawnTimeout;
-
 const startBirds = () => {
-  gameInterval = requestAnimationFrame(mainLoop);
-  spawnTimeout = setTimeout(() => {
-    // spawn bird after some time if none have spawned yet
-    if (activeBirds.length === 0) {
-      spawnRandomBird();
-    }
-  }, 1500);
+  if (!birdsEnabled) {
+    gameInterval = requestAnimationFrame(mainLoop);
+    spawnTimeout = setTimeout(() => {
+      // spawn bird after some time if none have spawned yet
+      if (activeBirds.length === 0) {
+        spawnRandomBird();
+      }
+    }, 1500);
+    birdsEnabled = true;
+  }
 };
 
 const removeBirds = () => {
@@ -82,10 +85,13 @@ const removeBirds = () => {
   activeBirds = [];
 };
 
-export const stopBirds = () => {
-  removeBirds();
-  cancelAnimationFrame(gameInterval);
-  clearTimeout(spawnTimeout);
+const stopBirds = () => {
+  if (birdsEnabled) {
+    removeBirds();
+    cancelAnimationFrame(gameInterval);
+    clearTimeout(spawnTimeout);
+    birdsEnabled = false;
+  }
 };
 
 const getCurrentDomain = () => {
@@ -97,23 +103,16 @@ const enabledOnThisSite = options => {
 };
 
 chrome.runtime.onMessage.addListener(settings => {
-  if (settings.enabled !== undefined && enabledOnThisSite(gameOptions)) {
-    if (settings.enabled && !gameOptions.enabled) {
-      startBirds();
-    } else if (!settings.enabled && gameOptions.enabled) {
-      stopBirds();
-    }
-  }
-
-  if (settings.blockedSites !== undefined && gameOptions.enabled) {
-    if (enabledOnThisSite(settings) && !enabledOnThisSite(gameOptions)) {
-      startBirds();
-    } else if (!enabledOnThisSite(settings) && enabledOnThisSite(gameOptions)) {
-      stopBirds();
-    }
-  }
-
   Object.assign(gameOptions, settings);
+
+  // if birds are enabled/disabled, this should take effect immediately
+  if (documentReady) {
+    if (!gameOptions.enabled || !enabledOnThisSite(gameOptions)) {
+      stopBirds();
+    } else {
+      startBirds();
+    }
+  }
 });
 
 const docReadyInterval = setInterval(() => {
@@ -121,6 +120,7 @@ const docReadyInterval = setInterval(() => {
   if (document.readyState === 'complete') {
     clearInterval(docReadyInterval);
     chrome.storage.local.get(null, settings => {
+      documentReady = true;
       Object.assign(gameOptions, settings);
       if (gameOptions.enabled && enabledOnThisSite(gameOptions)) {
         startBirds();
@@ -137,6 +137,7 @@ const selectBird = bird => {
   bird?.setSelected(true);
 };
 
+// exchange data with popup inspector
 chrome.runtime.onConnect.addListener(function (port) {
   if (port.name === 'birdInspector') {
     port.onMessage.addListener(function (msg) {
