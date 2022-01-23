@@ -5,6 +5,13 @@ import Slider from '@mui/material/Slider';
 import Typography from '@mui/material/Typography';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import ToggleButton from '@mui/material/ToggleButton';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import Slide from '@mui/material/Slide';
 import { defaultSettings } from '../defaultSettings';
 import {
   CenteredFlexColumn,
@@ -16,6 +23,7 @@ import { getDomain } from '../utils';
 const SettingsPage = () => {
   const [settings, setSettings] = useState(defaultSettings);
   const [currentDomain, setCurrentDomain] = useState();
+  const [showResetDialog, setShowResetDialog] = useState(false);
 
   useEffect(() => {
     chrome.storage.local.get(defaultSettings, settingValues => {
@@ -75,6 +83,10 @@ const SettingsPage = () => {
     changeSetting('enabled', !newSettings.includes('allSites'));
   };
 
+  const resetBirdLog = () => {
+    chrome.storage.local.set({ birdsSeen: {} });
+  };
+
   return (
     <CheckboxContainer>
       <CenteredFlexColumn style={{ width: '100%' }}>
@@ -114,8 +126,48 @@ const SettingsPage = () => {
           sx={{ maxWidth: '90%' }}
         />
       </CenteredFlexColumn>
+      <CenteredFlexColumn style={{ width: '100%', marginTop: '1rem' }}>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={() => setShowResetDialog(true)}
+        >
+          Reset Bird Log
+        </Button>
+      </CenteredFlexColumn>
+      <Dialog
+        open={showResetDialog}
+        TransitionComponent={Transition}
+        keepMounted
+        onClose={() => setShowResetDialog(false)}
+      >
+        <DialogTitle>Reset Bird Log?</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            {
+              "This will reset all birds you've discovered. This can't be undone!"
+            }
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setShowResetDialog(false)}>Cancel</Button>
+          <Button
+            onClick={() => {
+              setShowResetDialog(false);
+              resetBirdLog();
+            }}
+            color="error"
+          >
+            Reset
+          </Button>
+        </DialogActions>
+      </Dialog>
     </CheckboxContainer>
   );
 };
 
 export default SettingsPage;
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
