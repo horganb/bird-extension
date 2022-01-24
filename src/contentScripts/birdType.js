@@ -22,6 +22,7 @@ export const birdTypes = [
     wingspan: [140, 165],
     mass: [2800],
     fact: 'The flamingo gets its pink color from metabolizing the pigments of its food, typically algae and brine shrimp.',
+    disabled: true, // TODO: remove this
   },
   {
     name: 'American Goldfinch',
@@ -238,6 +239,7 @@ const currentHour = new Date().getHours();
 if (currentHour > 7 && currentHour < 19) {
   usedBirdTypes = usedBirdTypes.filter(type => !type.nocturnal);
 }
+usedBirdTypes = usedBirdTypes.filter(type => !type.disabled);
 
 const getRarity = (birdType, birdsSeen) => {
   const SEEN_BIRD_RARITY_DECREASE = 50;

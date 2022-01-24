@@ -1,3 +1,9 @@
+## 1.1.4 (1/23/2022)
+
+### Changed
+
+- Temporarily removed American Flamingo
+
 ## 1.1.3 (1/23/2022)
 
 ### Added
