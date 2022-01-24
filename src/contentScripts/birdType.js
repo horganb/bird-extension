@@ -12,6 +12,18 @@ export const birdTypes = [
     fact: 'The American crow thrives around people, often spotted in agricultural fields, lawns, parking lots, athletic fields, roadsides, towns, and city garbage dumps.',
   },
   {
+    name: 'American Flamingo',
+    species: 'Phoenicopterus ruber',
+    imagePath: 'americanFlamingo',
+    speed: 0.3,
+    rarity: 15,
+    region: 'Americas',
+    habitat: 'Lagoon',
+    wingspan: [140, 165],
+    mass: [2800],
+    fact: 'The flamingo gets its pink color from metabolizing the pigments of its food, typically algae and brine shrimp.',
+  },
+  {
     name: 'American Goldfinch',
     species: 'Spinus tristis',
     imagePath: 'americanGoldfinch',
