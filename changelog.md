@@ -1,3 +1,22 @@
+## 1.1.3 (1/23/2022)
+
+### Added
+
+- Added birds: Little Owl, Barn Owl, American Robin, American Flamingo
+- Added option to reset Bird Log progress
+- Added nocturnal behavior for owls, only appearing at night in real time
+
+### Fixed
+
+- General performance improvements
+- Fixed a bug causing birds to jump across the page when their platform is removed
+
+### Changed
+
+- Greatly reduced the chance that undiscovered birds will spawn
+- Increased rarity of some birds
+- Adjusting bird inspector arrow styling
+
 ## 1.1.2 (1/16/2022)
 
 ### Fixed
