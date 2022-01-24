@@ -126,7 +126,7 @@ const SettingsPage = () => {
           sx={{ maxWidth: '90%' }}
         />
       </CenteredFlexColumn>
-      <CenteredFlexColumn style={{ width: '100%', marginTop: '1rem' }}>
+      <CenteredFlexColumn style={{ width: '100%', margin: '1rem 0 0.5rem 0' }}>
         <Button
           variant="outlined"
           color="error"
