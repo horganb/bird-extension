@@ -22,7 +22,6 @@ export const birdTypes = [
     wingspan: [140, 165],
     mass: [2800],
     fact: 'The flamingo gets its pink color from metabolizing the pigments of its food, typically algae and brine shrimp.',
-    disabled: true, // TODO: remove this
   },
   {
     name: 'American Goldfinch',
