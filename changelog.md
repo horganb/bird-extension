@@ -1,3 +1,10 @@
+## 1.1.5 (12/8/2022)
+
+### Changed
+
+- Added back American Flamingo
+- Welcome site is now locally hosted
+
 ## 1.1.4 (1/23/2022)
 
 ### Changed
