@@ -1,9 +1,7 @@
-import { localURL } from "../contentScripts/utils";
-
 chrome.runtime.onInstalled.addListener(function (details) {
   if (details.reason === 'install') {
     chrome.tabs.create({
-      url: localURL("site/build/index.html")
+      url: chrome.runtime.getURL("site/build/index.html")
     });
   } else if (details.reason === 'update') {
     // extension is updated
